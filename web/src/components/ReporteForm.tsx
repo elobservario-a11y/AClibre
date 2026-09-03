@@ -110,35 +110,30 @@ export default function ReporteForm() {
         exactLon = -3.7
       }
 
-      const pub = obfuscateCoords(exactLat, exactLon)
-
-      // 3. Generar protocol_id vía RPC
-      const { data: protocolData, error: rpcError } = await supabase
-        .rpc('generar_protocol_id', { p_ine: municipio.codigo_ine, p_tipo: 'INC' })
-      if (rpcError) throw rpcError
-      const protocolId: string = protocolData
-
-      // 4. Insertar incidencia
-      const { data: incData, error: incError } = await supabase
-        .from('incidencias')
-        .insert({
-          protocol_id: protocolId,
-          municipio_id: await getMunicipioId(municipio.codigo_ine),
-          usuario_id: user.id,
+      // 3. Crear incidencia en el servidor con validación de Turnstile y sesión
+      const resCrear = await fetch('/api/incidencias/crear', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          turnstileToken,
+          codigoIne: municipio.codigo_ine,
           tipo,
           descripcion,
-          geom: `SRID=4326;POINT(${exactLon} ${exactLat})`,
-          geom_publica: `SRID=4326;POINT(${pub.lon} ${pub.lat})`,
-          nivel_confianza: 1,
-          estado_moderacion: 'pendiente',
-        })
-        .select('id')
-        .single()
-      if (incError) throw incError
+          lat: exactLat,
+          lon: exactLon,
+        }),
+      })
 
-      // 5. Subir imagen al storage de Supabase
+      const resJson = await resCrear.json()
+      if (!resCrear.ok) {
+        throw new Error(resJson.error || 'Error al validar el reporte en el servidor')
+      }
+
+      const { incidenciaId, protocolId } = resJson
+
+      // 4. Subir imagen al storage de Supabase
       const ext = imagen.mimeType === 'image/png' ? 'png' : 'jpg'
-      const storagePath = `incidencias/${incData.id}/${protocolId}.${ext}`
+      const storagePath = `incidencias/${incidenciaId}/${protocolId}.${ext}`
       const { error: uploadError } = await supabase.storage
         .from('evidencias')
         .upload(storagePath, imagen.blob, { contentType: imagen.mimeType, upsert: false })
@@ -151,7 +146,7 @@ export default function ReporteForm() {
 
       const { error: eviError } = await supabase.from('evidencias').insert({
         protocol_id: eviProtocol,
-        incidencia_id: incData.id,
+        incidencia_id: incidenciaId,
         url_storage: storagePath,
         hash_sha256: imagen.sha256,
       })

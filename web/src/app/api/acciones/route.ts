@@ -1,14 +1,16 @@
 import { NextResponse } from 'next/server'
-import { createAdminClient } from '@/lib/supabase/admin'
 import { createClient } from '@/lib/supabase/server'
 
-export async function GET(request: Request) {
+export async function GET() {
   try {
-    const supabase = createAdminClient()
-    const { searchParams } = new URL(request.url)
-    const emailParam = searchParams.get('email')
+    const supabase = await createClient()
+    const { data: { user }, error: authError } = await supabase.auth.getUser()
 
-    let query = supabase
+    if (authError || !user) {
+      return NextResponse.json({ error: 'No autorizado. Se requiere inicio de sesión.' }, { status: 401 })
+    }
+
+    const { data, error } = await supabase
       .from('acciones')
       .select(`
         id,
@@ -30,13 +32,8 @@ export async function GET(request: Request) {
           provincia
         )
       `)
+      .eq('usuario_id', user.id)
       .order('creado_en', { ascending: false })
-
-    if (emailParam) {
-      query = query.eq('email', emailParam.trim().toLowerCase())
-    }
-
-    const { data, error } = await query
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 })
@@ -68,7 +65,13 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const supabase = createAdminClient()
+    const supabase = await createClient()
+    const { data: { user }, error: authError } = await supabase.auth.getUser()
+
+    if (authError || !user) {
+      return NextResponse.json({ error: 'No autorizado. Se requiere inicio de sesión.' }, { status: 401 })
+    }
+
     const body = await request.json()
     const {
       tipo = 'alegacion_ordenanza',
@@ -102,18 +105,19 @@ export async function POST(request: Request) {
       .rpc('generar_protocol_id', { p_ine: muni.codigo_ine, p_tipo: 'ACC' })
     if (rpcErr) throw rpcErr
 
-    // 3. Insertar la acción
+    // 3. Insertar la acción vinculada obligatoriamente al usuario autenticado
     const { data: nuevaAccion, error: insErr } = await supabase
       .from('acciones')
       .insert({
         protocol_id: protocolId,
         municipio_id: municipioId,
+        usuario_id: user.id,
         tipo,
         estado: 'presentada',
         fecha_presentacion: fechaPresentacion,
         numero_registro: numeroRegistro || null,
         organismo_destino: organismoDestino || `Ayuntamiento de ${muni.nombre}`,
-        email: email ? email.trim().toLowerCase() : null,
+        email: user.email || (email ? email.trim().toLowerCase() : null),
         notas: notas || null,
         norma_id: normaId || null,
         incidencia_id: incidenciaId || null,
@@ -133,7 +137,13 @@ export async function POST(request: Request) {
 
 export async function PATCH(request: Request) {
   try {
-    const supabase = createAdminClient()
+    const supabase = await createClient()
+    const { data: { user }, error: authError } = await supabase.auth.getUser()
+
+    if (authError || !user) {
+      return NextResponse.json({ error: 'No autorizado. Se requiere inicio de sesión.' }, { status: 401 })
+    }
+
     const body = await request.json()
     const { id, estado, notas } = body
 
@@ -150,6 +160,7 @@ export async function PATCH(request: Request) {
         notas: notas || null,
       })
       .eq('id', id)
+      .eq('usuario_id', user.id)
       .select()
       .single()
 
