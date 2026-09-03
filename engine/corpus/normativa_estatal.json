@@ -1,0 +1,71 @@
+[
+  {
+    "id": "BOE-A-2003-23514",
+    "nombre": "Reglamento General de Circulación (Real Decreto 1428/2003)",
+    "rango": "Real Decreto",
+    "fecha_disposicion": "2003-11-21",
+    "fecha_consulta": "2026-09-03",
+    "url_oficial": "https://www.boe.es/buscar/act.php?id=BOE-A-2003-23514",
+    "hash_sha256": "4b6ecf7b4c4897f26798835848bb2d244670c86800720616110f08e5c468e83c",
+    "articulos_clave": [
+      {
+        "articulo": "Artículo 90",
+        "titulo": "Lugares en que deben efectuarse la parada y el estacionamiento",
+        "cita_literal": "La parada o el estacionamiento de un vehículo en vías urbanas se llevará a cabo mediante la colocación del vehículo lo más cerca posible de su borde derecho, salvo en las vías de único sentido, en que se podrá situar también en el lado izquierdo.",
+        "relevancia": "Regla general de estacionamiento en vía urbana aplicable a todo vehículo apto para circular."
+      },
+      {
+        "articulo": "Artículo 93",
+        "titulo": "Ordenanzas municipales",
+        "cita_literal": "1. El régimen de parada y estacionamiento en vías urbanas se regulará por ordenanza municipal, y podrán adoptarse las medidas necesarias para evitar el entorpecimiento del tráfico y entre ellas limitaciones horarias de duración del estacionamiento, así como las medidas correctoras precisas, incluida la retirada del vehículo o su inmovilización [...]. 2. En ningún caso podrán las ordenanzas municipales oponerse, alterar, desvirtuar o inducir a confusión con los preceptos de este reglamento.",
+        "relevancia": "Límite explícito a la potestad municipal: la ordenanza no puede desvirtuar ni oponerse a las normas generales de tráfico estatales."
+      }
+    ]
+  },
+  {
+    "id": "BOE-A-2015-11722",
+    "nombre": "Texto Refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial (RDL 6/2015)",
+    "rango": "Real Decreto Legislativo",
+    "fecha_disposicion": "2015-10-30",
+    "fecha_consulta": "2026-09-03",
+    "url_oficial": "https://www.boe.es/buscar/act.php?id=BOE-A-2015-11722",
+    "hash_sha256": "8ef04652c7b55fbe91823eb57ecfaef7f7a77e8a939f280a97b20982cf19ecaa",
+    "articulos_clave": [
+      {
+        "articulo": "Artículo 7",
+        "titulo": "Competencias de los municipios",
+        "cita_literal": "Corresponde a los municipios: [...] b) La regulación mediante ordenanza municipal de circulación, de los usos de las vías urbanas, haciendo compatible la equitativa distribución de los aparcamientos entre todos los usuarios con la necesaria fluidez del tráfico rodado y con el uso peatonal de las calles.",
+        "relevancia": "La distribución equitativa es entre todos los usuarios, sin discriminación por la condición de vivienda interior del vehículo."
+      },
+      {
+        "articulo": "Artículo 38",
+        "titulo": "Parada y estacionamiento",
+        "cita_literal": "La parada y el estacionamiento deberán efectuarse de tal manera que el vehículo no obstaculice la circulación ni constituya un riesgo para el resto de los usuarios de la vía.",
+        "relevancia": "El criterio rector es la seguridad y la fluidez del tráfico, no la actividad que se desarrolle en el interior."
+      }
+    ]
+  },
+  {
+    "id": "BOE-A-1985-5392",
+    "nombre": "Ley 7/1985, de 2 de abril, Reguladora de las Bases del Régimen Local (LRBRL)",
+    "rango": "Ley",
+    "fecha_disposicion": "1985-04-02",
+    "fecha_consulta": "2026-09-03",
+    "url_oficial": "https://www.boe.es/buscar/act.php?id=BOE-A-1985-5392",
+    "hash_sha256": "df06e872c050730d170329ec37f1eef19d20c58e4544d6da21a97d449339e80c",
+    "articulos_clave": [
+      {
+        "articulo": "Artículo 25.2.g",
+        "titulo": "Competencias propias del Municipio",
+        "cita_literal": "El Municipio ejercerá en todo caso como competencias propias [...] Tráfico, estacionamiento de vehículos y movilidad. Transporte colectivo urbano.",
+        "relevancia": "Base competencial municipal supeditada a las leyes sectoriales de tráfico y seguridad vial."
+      },
+      {
+        "articulo": "Artículo 84",
+        "titulo": "Intervención de la actividad de los ciudadanos",
+        "cita_literal": "Las entidades locales podrán intervenir la actividad de los ciudadanos a través de los siguientes medios: a) Ordenanzas y bandos. [...] Las licencias o actos de control preventivo se ajustarán a los principios de necesidad y proporcionalidad.",
+        "relevancia": "Principio de proporcionalidad: prohibir la estancia a toda una categoría de vehículos sin justificación técnica de masa o gálibo vulnera la proporcionalidad."
+      }
+    ]
+  }
+]
