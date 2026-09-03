@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import Image from 'next/image'
+import SuscripcionAlertas from '@/components/SuscripcionAlertas'
 
 export const revalidate = 60
 
@@ -119,6 +120,11 @@ export default async function MunicipioPage({ params }: PageProps) {
         </a>
       </div>
 
+      {/* Suscripción a alertas de este municipio */}
+      <div className="mt-6">
+        <SuscripcionAlertas municipioId={muni.id} municipioNombre={muni.nombre} provincia={muni.provincia} />
+      </div>
+
       {/* Normas y Ordenanzas */}
       <section className="mt-8">
         <h2 className="text-xl font-bold text-gray-900">Normativa municipal detectada</h2>
@@ -134,15 +140,30 @@ export default async function MunicipioPage({ params }: PageProps) {
                   <span className="font-bold text-gray-900">
                     Ordenanza de {norma.tipo} ({norma.protocol_id})
                   </span>
-                  <span className="rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-semibold text-blue-700">
+                  <span className="rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-semibold text-blue-700 uppercase">
                     {norma.estado}
                   </span>
                 </div>
-                {norma.plazo_alegaciones_hasta && (
-                  <p className="mt-1 text-xs font-bold text-red-600">
-                    ⏳ Plazo de alegaciones hasta: {norma.plazo_alegaciones_hasta}
-                  </p>
-                )}
+                {norma.plazo_alegaciones_hasta && (() => {
+                  const targetDate = new Date(norma.plazo_alegaciones_hasta)
+                  const diffTime = targetDate.getTime() - Date.now()
+                  const diasRestantes = Math.max(0, Math.ceil(diffTime / (1000 * 60 * 60 * 24)))
+                  const activo = diasRestantes > 0
+                  return (
+                    <div className={`mt-3 rounded-xl p-3 text-xs ${
+                      activo ? 'border border-red-200 bg-red-50 text-red-900' : 'bg-gray-100 text-gray-500'
+                    }`}>
+                      {activo ? (
+                        <div className="flex flex-wrap items-center justify-between gap-1">
+                          <span>⏳ <strong>Cuenta atrás:</strong> Quedan <strong>{diasRestantes} días</strong> para presentar alegaciones</span>
+                          <span className="font-mono text-[11px] font-bold text-red-700">Vence: {norma.plazo_alegaciones_hasta}</span>
+                        </div>
+                      ) : (
+                        <span>Plazo de alegaciones cerrado el {norma.plazo_alegaciones_hasta}</span>
+                      )}
+                    </div>
+                  )
+                })()}
                 {norma.hallazgos && norma.hallazgos.length > 0 && (
                   <div className="mt-3 space-y-2 border-t pt-3">
                     {norma.hallazgos.map((h: any, idx: number) => (
