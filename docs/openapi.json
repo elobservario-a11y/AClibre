@@ -1,0 +1,80 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Slowvan Radar API v1",
+    "description": "API pública y federada para consultar y sincronizar incidencias, ordenanzas municipales y análisis de restricciones al caravaning en España.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Jose Montero",
+      "email": "info@slowvan.com",
+      "url": "https://slowvan.com"
+    },
+    "license": {
+      "name": "AGPL-3.0",
+      "url": "https://www.gnu.org/licenses/agpl-3.0.html"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://slowvan.com/api/v1",
+      "description": "Producción"
+    },
+    {
+      "url": "http://localhost:3000/api/v1",
+      "description": "Desarrollo local"
+    }
+  ],
+  "paths": {
+    "/incidencias": {
+      "get": {
+        "summary": "Listar incidencias verificadas",
+        "description": "Devuelve incidencias aprobadas por moderación con coordenadas ofuscadas a ~100m.",
+        "parameters": [
+          { "name": "ine", "in": "query", "description": "Código INE del municipio (5 dígitos)", "schema": { "type": "string" } },
+          { "name": "provincia", "in": "query", "description": "Nombre de la provincia", "schema": { "type": "string" } },
+          { "name": "tipo", "in": "query", "description": "Tipo de incidencia (senal_ilegal, ordenanza_restrictiva, etc.)", "schema": { "type": "string" } },
+          { "name": "limit", "in": "query", "description": "Límite de resultados (máx. 500)", "schema": { "type": "integer", "default": 100 } }
+        ],
+        "responses": {
+          "200": { "description": "Listado de incidencias en formato canónico" }
+        }
+      }
+    },
+    "/normas": {
+      "get": {
+        "summary": "Listar ordenanzas municipales detectadas",
+        "description": "Devuelve ordenanzas procesadas con sus hallazgos jurídicos y estado de plazos.",
+        "parameters": [
+          { "name": "ine", "in": "query", "description": "Código INE", "schema": { "type": "string" } },
+          { "name": "estado", "in": "query", "description": "informacion_publica | vigente | recurrida", "schema": { "type": "string" } },
+          { "name": "tipo", "in": "query", "description": "circulacion | convivencia | costas", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Listado de ordenanzas y citas legales verificadas" }
+        }
+      }
+    },
+    "/municipios/{ine}": {
+      "get": {
+        "summary": "Consultar ficha completa de un municipio",
+        "description": "Devuelve centroide, población, nivel en la escalera de confianza, ordenanzas vigentes e incidencias.",
+        "parameters": [
+          { "name": "ine", "in": "path", "required": true, "description": "Código INE de 5 dígitos", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Ficha integral del municipio" },
+          "404": { "description": "Municipio no encontrado" }
+        }
+      }
+    },
+    "/federacion": {
+      "post": {
+        "summary": "Ingesta federada de incidencias (Protocolo Abierto)",
+        "description": "Permite a plataformas aliadas y clubes enviar reportes estandarizados con hash de prueba.",
+        "responses": {
+          "201": { "description": "Incidencia registrada en cola de moderación" }
+        }
+      }
+    }
+  }
+}

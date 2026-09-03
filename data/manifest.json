@@ -1,0 +1,30 @@
+{
+  "version": "1.0",
+  "exported_at": "2026-09-03T20:07:25.846399+00:00",
+  "responsable": "Jose Montero",
+  "email_contacto": "info@slowvan.com",
+  "licencia": "AGPL-3.0",
+  "total_incidencias": 29,
+  "total_normas": 29,
+  "total_fuentes": 52,
+  "archivos": {
+    "incidencias.json": {
+      "sha256": "1c0458d11c52af45cb320f03654858fcd34142b4c958c522daae1ebea58a04ec",
+      "bytes": 17267
+    },
+    "incidencias.csv": {
+      "sha256": "641cc50e9b904126ef3c1048089b3d6d1c1996a7f468b30c17ca33c04669f12b",
+      "bytes": 9660
+    },
+    "normas.json": {
+      "sha256": "c39fbb49a6f874c3bb328fbd85bd59aace9de001a42a7f0a04942efeabce73ff",
+      "bytes": 13460
+    },
+    "fuentes.json": {
+      "sha256": "42c1bb0610430c9871ce0f75f165f1f41db9f5d08567384b957ebe0ad6059e07",
+      "bytes": 7604
+    }
+  },
+  "merkle_root_sha256": "2dd535269c391be35b278e887094ded8edfebf2414d3a9c93f8e0010bffa1f66",
+  "instrucciones_verificacion": "Ejecuta python engine/verify_public_data.py para auditar la integridad de todos los archivos sin conexión a la base de datos."
+}

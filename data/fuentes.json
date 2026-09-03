@@ -4,7 +4,7 @@
     "provincia": "A Coruña",
     "tipo": "rss",
     "url_base": "https://bop.dacoruna.gal/",
-    "activo": false
+    "activo": true
   },
   {
     "id": 2,
@@ -18,14 +18,14 @@
     "provincia": "Alicante",
     "tipo": "rss",
     "url_base": "https://www.dip-alicante.es/bop/",
-    "activo": false
+    "activo": true
   },
   {
     "id": 4,
     "provincia": "Almería",
     "tipo": "html",
     "url_base": "https://www.dipalme.org/bop/",
-    "activo": false
+    "activo": true
   },
   {
     "id": 1,
@@ -39,7 +39,7 @@
     "provincia": "Asturias",
     "tipo": "rss",
     "url_base": "https://sede.asturias.es/bopa",
-    "activo": false
+    "activo": true
   },
   {
     "id": 6,
@@ -60,14 +60,14 @@
     "provincia": "Barcelona",
     "tipo": "rss",
     "url_base": "https://bop.diba.cat/",
-    "activo": false
+    "activo": true
   },
   {
     "id": 48,
     "provincia": "Bizkaia",
     "tipo": "html",
     "url_base": "https://bob.bizkaia.eus/",
-    "activo": false
+    "activo": true
   },
   {
     "id": 9,
@@ -88,14 +88,14 @@
     "provincia": "Cádiz",
     "tipo": "html",
     "url_base": "https://www.dipucadiz.es/bop/",
-    "activo": false
+    "activo": true
   },
   {
     "id": 12,
     "provincia": "Cantabria",
     "tipo": "html",
     "url_base": "https://boc.cantabria.es/",
-    "activo": false
+    "activo": true
   },
   {
     "id": 13,
@@ -137,21 +137,21 @@
     "provincia": "Gipuzkoa",
     "tipo": "html",
     "url_base": "https://bog.gipuzkoa.eus/",
-    "activo": false
+    "activo": true
   },
   {
     "id": 18,
     "provincia": "Girona",
     "tipo": "rss",
     "url_base": "https://www.ddgi.cat/bop/",
-    "activo": false
+    "activo": true
   },
   {
     "id": 19,
     "provincia": "Granada",
     "tipo": "html",
     "url_base": "https://www.dipgra.es/bop/",
-    "activo": false
+    "activo": true
   },
   {
     "id": 20,
@@ -165,7 +165,7 @@
     "provincia": "Huelva",
     "tipo": "html",
     "url_base": "https://www.diphuelva.es/bop/",
-    "activo": false
+    "activo": true
   },
   {
     "id": 23,
@@ -179,7 +179,7 @@
     "provincia": "Illes Balears",
     "tipo": "rss",
     "url_base": "https://boib.caib.es/",
-    "activo": false
+    "activo": true
   },
   {
     "id": 25,
@@ -200,7 +200,7 @@
     "provincia": "Las Palmas",
     "tipo": "html",
     "url_base": "https://www.boplaspalmas.net/",
-    "activo": false
+    "activo": true
   },
   {
     "id": 26,
@@ -235,7 +235,7 @@
     "provincia": "Málaga",
     "tipo": "rss",
     "url_base": "https://www.malaga.es/bop/",
-    "activo": false
+    "activo": true
   },
   {
     "id": 52,
@@ -249,7 +249,7 @@
     "provincia": "Murcia",
     "tipo": "rss",
     "url_base": "https://www.borm.es/",
-    "activo": false
+    "activo": true
   },
   {
     "id": 32,
@@ -277,7 +277,7 @@
     "provincia": "Pontevedra",
     "tipo": "rss",
     "url_base": "https://boppo.depo.gal/",
-    "activo": false
+    "activo": true
   },
   {
     "id": 38,
@@ -291,7 +291,7 @@
     "provincia": "Santa Cruz de Tenerife",
     "tipo": "html",
     "url_base": "https://www.bopsantacruzdetenerife.es/",
-    "activo": false
+    "activo": true
   },
   {
     "id": 40,
@@ -319,7 +319,7 @@
     "provincia": "Tarragona",
     "tipo": "rss",
     "url_base": "https://www.dipta.cat/bop/",
-    "activo": false
+    "activo": true
   },
   {
     "id": 44,

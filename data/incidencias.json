@@ -10,7 +10,8 @@
     "nivel_confianza": 4,
     "lon_publica": -3.08085146531553,
     "lat_publica": 39.362783589078,
-    "creado_en": "2026-09-03T16:33:52.626295+00:00"
+    "creado_en": "2026-09-03T16:33:52.626295+00:00",
+    "hash_sha256": "a2dfc7d3035b334d6d9e92d2e164d2336b2f2299e39515fc8391c789f809e080"
   },
   {
     "protocol_id": "ES-MU-33036-INC-2026-001",
@@ -23,7 +24,8 @@
     "nivel_confianza": 3,
     "lon_publica": -4.83185470502061,
     "lat_publica": 43.3986170222517,
-    "creado_en": "2026-09-03T16:33:52.626295+00:00"
+    "creado_en": "2026-09-03T16:33:52.626295+00:00",
+    "hash_sha256": "d449f1844ac57cc826454d4678fa70d945306dda08f3ae7d04edf91e5329c501"
   },
   {
     "protocol_id": "ES-MU-33056-INC-2026-001",
@@ -36,7 +38,8 @@
     "nivel_confianza": 4,
     "lon_publica": -5.08309733143693,
     "lat_publica": 43.4454829554333,
-    "creado_en": "2026-09-03T16:33:52.626295+00:00"
+    "creado_en": "2026-09-03T16:33:52.626295+00:00",
+    "hash_sha256": "efe0644b1bff54d58c31ee4f631ebab8f76e62fbfc37c29808b2d22b826ce3af"
   },
   {
     "protocol_id": "ES-MU-39047-INC-2026-001",
@@ -49,7 +52,8 @@
     "nivel_confianza": 4,
     "lon_publica": -3.5194480025727,
     "lat_publica": 43.4783680355235,
-    "creado_en": "2026-09-03T16:33:52.626295+00:00"
+    "creado_en": "2026-09-03T16:33:52.626295+00:00",
+    "hash_sha256": "8ac423d44c36268e0c37392182d0f559c9a922dc4d45f9c326605a7b043d6961"
   },
   {
     "protocol_id": "ES-MU-39080-INC-2026-001",
@@ -62,7 +66,8 @@
     "nivel_confianza": 3,
     "lon_publica": -4.3934055675924,
     "lat_publica": 43.3686082289681,
-    "creado_en": "2026-09-03T16:33:52.626295+00:00"
+    "creado_en": "2026-09-03T16:33:52.626295+00:00",
+    "hash_sha256": "01b1a52e1ffae4c6c2142f71aa6f784b9294e01f6e1780ea805dda04d9ebecb1"
   },
   {
     "protocol_id": "ES-MU-11035-INC-2026-001",
@@ -75,7 +80,8 @@
     "nivel_confianza": 4,
     "lon_publica": -5.68302889318154,
     "lat_publica": 36.1264483457566,
-    "creado_en": "2026-09-03T16:33:52.626295+00:00"
+    "creado_en": "2026-09-03T16:33:52.626295+00:00",
+    "hash_sha256": "572c8343db99e59c249ca2857a05a9542f49156e3048f95d84599f6e79a1a4f7"
   },
   {
     "protocol_id": "ES-MU-11014-INC-2026-001",
@@ -88,7 +94,8 @@
     "nivel_confianza": 3,
     "lon_publica": -6.07747276087481,
     "lat_publica": 36.3120142502862,
-    "creado_en": "2026-09-03T16:33:52.626295+00:00"
+    "creado_en": "2026-09-03T16:33:52.626295+00:00",
+    "hash_sha256": "06f149e88c0e5f0a03fb7762918a56a8d0b646f34d1b415d841c31dd1b386d5b"
   },
   {
     "protocol_id": "ES-MU-03018-INC-2026-001",
@@ -101,7 +108,8 @@
     "nivel_confianza": 3,
     "lon_publica": -0.0466396277206164,
     "lat_publica": 38.6259396230645,
-    "creado_en": "2026-09-03T16:33:52.626295+00:00"
+    "creado_en": "2026-09-03T16:33:52.626295+00:00",
+    "hash_sha256": "de5b2cbc48a61a521a5137f2c999f49b97e0cd9b9f56c4eeb44b25c4a435996f"
   },
   {
     "protocol_id": "ES-MU-03047-INC-2026-001",
@@ -114,7 +122,8 @@
     "nivel_confianza": 3,
     "lon_publica": 0.0448345397045948,
     "lat_publica": 38.6532359493448,
-    "creado_en": "2026-09-03T16:33:52.626295+00:00"
+    "creado_en": "2026-09-03T16:33:52.626295+00:00",
+    "hash_sha256": "d390047bfd3cde555be29395e87cb49cffc8fd1cf66bfe2860dc9d8fff4427ce"
   },
   {
     "protocol_id": "ES-MU-12089-INC-2026-001",
@@ -127,7 +136,8 @@
     "nivel_confianza": 4,
     "lon_publica": 0.35570905062221,
     "lat_publica": 40.357533704277,
-    "creado_en": "2026-09-03T16:33:52.626295+00:00"
+    "creado_en": "2026-09-03T16:33:52.626295+00:00",
+    "hash_sha256": "ea4054e3f2cf381335809faf26bae896849e112e3845443edc8a14e56780bb5a"
   },
   {
     "protocol_id": "ES-MU-43905-INC-2026-001",
@@ -140,7 +150,8 @@
     "nivel_confianza": 3,
     "lon_publica": 1.14510525102031,
     "lat_publica": 41.0801145442712,
-    "creado_en": "2026-09-03T16:33:52.626295+00:00"
+    "creado_en": "2026-09-03T16:33:52.626295+00:00",
+    "hash_sha256": "47f4d3545b99f2b43556dd64dd98d1fef26afe4a9aadb208b76c855b7eb25231"
   },
   {
     "protocol_id": "ES-MU-17032-INC-2026-001",
@@ -153,7 +164,8 @@
     "nivel_confianza": 4,
     "lon_publica": 3.27425160356923,
     "lat_publica": 42.2914022208102,
-    "creado_en": "2026-09-03T16:33:52.626295+00:00"
+    "creado_en": "2026-09-03T16:33:52.626295+00:00",
+    "hash_sha256": "e709bf4d3f15cf53dd00f313b8beb681dfa5492d797d3cae8e43dc7464403c3e"
   },
   {
     "protocol_id": "ES-MU-17202-INC-2026-001",
@@ -166,7 +178,8 @@
     "nivel_confianza": 3,
     "lon_publica": 2.91559036651871,
     "lat_publica": 41.7424399961471,
-    "creado_en": "2026-09-03T16:33:52.626295+00:00"
+    "creado_en": "2026-09-03T16:33:52.626295+00:00",
+    "hash_sha256": "163860573eeaf2023e6f1c2546bf2e7b89d413d55f95077bdedf458c7e8164dc"
   },
   {
     "protocol_id": "ES-MU-29075-INC-2026-001",
@@ -179,7 +192,8 @@
     "nivel_confianza": 3,
     "lon_publica": -3.8294149106344,
     "lat_publica": 36.7864571173988,
-    "creado_en": "2026-09-03T16:33:52.626295+00:00"
+    "creado_en": "2026-09-03T16:33:52.626295+00:00",
+    "hash_sha256": "87c3e57c5bf99fca9269587bfbe95b75b62dd44abf509da15d9258f35a1e6d6c"
   },
   {
     "protocol_id": "ES-MU-04064-INC-2026-001",
@@ -192,7 +206,8 @@
     "nivel_confianza": 4,
     "lon_publica": -1.86569265611237,
     "lat_publica": 37.1148929985733,
-    "creado_en": "2026-09-03T16:33:52.626295+00:00"
+    "creado_en": "2026-09-03T16:33:52.626295+00:00",
+    "hash_sha256": "1e2a38e4546fc61e34928d59abb7a9c29201c5f2dab903d14da78353ceffa120"
   },
   {
     "protocol_id": "ES-MU-30003-INC-2026-001",
@@ -205,7 +220,8 @@
     "nivel_confianza": 3,
     "lon_publica": -1.58954411765523,
     "lat_publica": 37.4685789785835,
-    "creado_en": "2026-09-03T16:33:52.626295+00:00"
+    "creado_en": "2026-09-03T16:33:52.626295+00:00",
+    "hash_sha256": "367d87ceda8a5267ddb0c2747b5e1039df9631643f23e8b8e5a24f4d6339b569"
   },
   {
     "protocol_id": "ES-MU-03082-INC-2026-001",
@@ -218,7 +234,8 @@
     "nivel_confianza": 3,
     "lon_publica": 0.163633139085323,
     "lat_publica": 38.7679761124698,
-    "creado_en": "2026-09-03T16:33:52.626295+00:00"
+    "creado_en": "2026-09-03T16:33:52.626295+00:00",
+    "hash_sha256": "732ceefd9fc5372eed23a9ff132f6a298519be34e8781b787d890e7bd8f827d4"
   },
   {
     "protocol_id": "ES-MU-15030-INC-2026-001",
@@ -231,7 +248,8 @@
     "nivel_confianza": 3,
     "lon_publica": -8.42164572355936,
     "lat_publica": 43.3467182585927,
-    "creado_en": "2026-09-03T16:33:52.626295+00:00"
+    "creado_en": "2026-09-03T16:33:52.626295+00:00",
+    "hash_sha256": "89febc8e1cc1c87e51181cbe39eb5dd13f14124cd9baedc0da438c3402e904af"
   },
   {
     "protocol_id": "ES-MU-36051-INC-2026-001",
@@ -244,7 +262,8 @@
     "nivel_confianza": 4,
     "lon_publica": -8.82410457873833,
     "lat_publica": 42.4204093664118,
-    "creado_en": "2026-09-03T16:33:52.626295+00:00"
+    "creado_en": "2026-09-03T16:33:52.626295+00:00",
+    "hash_sha256": "20c235f6ae246f7a62ac74b111aeb44a6ce652ed3700fe2016f203d953512a38"
   },
   {
     "protocol_id": "ES-MU-36008-INC-2026-001",
@@ -257,7 +276,8 @@
     "nivel_confianza": 3,
     "lon_publica": -8.81177164822708,
     "lat_publica": 42.2771955523207,
-    "creado_en": "2026-09-03T16:33:52.626295+00:00"
+    "creado_en": "2026-09-03T16:33:52.626295+00:00",
+    "hash_sha256": "c9a48bbd01541666ed82e119eba59a620223126acb4be8eb0ed7d3d7134b6293"
   },
   {
     "protocol_id": "ES-MU-17160-INC-2026-001",
@@ -270,7 +290,8 @@
     "nivel_confianza": 3,
     "lon_publica": 3.01165275364639,
     "lat_publica": 41.7837419563674,
-    "creado_en": "2026-09-03T16:33:52.626295+00:00"
+    "creado_en": "2026-09-03T16:33:52.626295+00:00",
+    "hash_sha256": "8d1c54345852cc3f51a20e69b1b766be1a1bc0a1c9bd8971e02a71833df55bee"
   },
   {
     "protocol_id": "ES-MU-03063-INC-2026-001",
@@ -283,7 +304,8 @@
     "nivel_confianza": 3,
     "lon_publica": 0.0802621668513739,
     "lat_publica": 38.8248697193251,
-    "creado_en": "2026-09-03T16:33:52.626295+00:00"
+    "creado_en": "2026-09-03T16:33:52.626295+00:00",
+    "hash_sha256": "bdbca07d0691b4e8dbf607457fd1f57e077f1530afc3f409a8c4945889d12887"
   },
   {
     "protocol_id": "ES-MU-18017-INC-2026-001",
@@ -296,7 +318,8 @@
     "nivel_confianza": 4,
     "lon_publica": -3.72416103169328,
     "lat_publica": 36.7694558421993,
-    "creado_en": "2026-09-03T16:33:52.626295+00:00"
+    "creado_en": "2026-09-03T16:33:52.626295+00:00",
+    "hash_sha256": "e384843283b9e62acb97441e8049277735f64fb11f153ac45bac630426d411bf"
   },
   {
     "protocol_id": "ES-MU-43038-INC-2026-001",
@@ -309,7 +332,8 @@
     "nivel_confianza": 3,
     "lon_publica": 1.04263096463682,
     "lat_publica": 41.0829713343375,
-    "creado_en": "2026-09-03T16:33:52.626295+00:00"
+    "creado_en": "2026-09-03T16:33:52.626295+00:00",
+    "hash_sha256": "e7ec9378d8cbc589e85b40e9821fc7d517a2531b3f209d3ce2e9ec81fd1ce2bf"
   },
   {
     "protocol_id": "ES-MU-23028-INC-2026-001",
@@ -322,7 +346,8 @@
     "nivel_confianza": 4,
     "lon_publica": -2.96423219405587,
     "lat_publica": 37.9124216007634,
-    "creado_en": "2026-09-03T16:33:52.626295+00:00"
+    "creado_en": "2026-09-03T16:33:52.626295+00:00",
+    "hash_sha256": "69df73e083857e5e0548ea6239a6977faf1bc117b2be39227453edd5994ecb18"
   },
   {
     "protocol_id": "ES-MU-16078-INC-2026-001",
@@ -335,7 +360,8 @@
     "nivel_confianza": 3,
     "lon_publica": -1.9932839777543,
     "lat_publica": 40.2060237610975,
-    "creado_en": "2026-09-03T16:33:52.626295+00:00"
+    "creado_en": "2026-09-03T16:33:52.626295+00:00",
+    "hash_sha256": "a0f688fb7d1d68e9add619bea31ce3908b143444e7a63962e5eaae508b1eff01"
   },
   {
     "protocol_id": "ES-MU-29084-INC-2026-001",
@@ -348,7 +374,8 @@
     "nivel_confianza": 3,
     "lon_publica": -5.12794060520816,
     "lat_publica": 36.7783621770249,
-    "creado_en": "2026-09-03T16:33:52.626295+00:00"
+    "creado_en": "2026-09-03T16:33:52.626295+00:00",
+    "hash_sha256": "9b30b682cb4ffe13879b34a86751e57a71d571acfd4d05006c3ec021e49989d2"
   },
   {
     "protocol_id": "ES-MU-07024-INC-2026-001",
@@ -361,7 +388,8 @@
     "nivel_confianza": 4,
     "lon_publica": 1.4595451882118,
     "lat_publica": 38.6925715832947,
-    "creado_en": "2026-09-03T16:33:52.626295+00:00"
+    "creado_en": "2026-09-03T16:33:52.626295+00:00",
+    "hash_sha256": "558162f2b177760bd6f553c1af5b091da2f3c5ccc4d04854f3836391f6a2bf12"
   },
   {
     "protocol_id": "ES-MU-01051-INC-2026-001",
@@ -374,6 +402,7 @@
     "nivel_confianza": 2,
     "lon_publica": -2.38663585776971,
     "lat_publica": 42.8389360861267,
-    "creado_en": "2026-09-03T16:20:24.216006+00:00"
+    "creado_en": "2026-09-03T16:20:24.216006+00:00",
+    "hash_sha256": "35f5203de030753e76e4eb5bfd67d3001e2897d7d415382acf26d591739d4db7"
   }
 ]

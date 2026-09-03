@@ -1,7 +1,17 @@
 import os
 import json
 import csv
+import hashlib
+from datetime import datetime, timezone
 import psycopg2
+
+def calcular_hash_archivo(filepath: str) -> str:
+    """Calcula el hash SHA-256 de un archivo en disco."""
+    h = hashlib.sha256()
+    with open(filepath, 'rb') as f:
+        while chunk := f.read(8192):
+            h.update(chunk)
+    return h.hexdigest()
 
 def export_public_datasets():
     base_dir = os.path.dirname(os.path.dirname(__file__))
@@ -17,7 +27,7 @@ def export_public_datasets():
     )
     cursor = conn.cursor()
 
-    # 1. Exportar Incidencias Aprobadas (Auditables, Públicas, Sin datos privados)
+    # 1. Exportar Incidencias Aprobadas
     cursor.execute("""
         select 
             i.protocol_id,
@@ -40,22 +50,25 @@ def export_public_datasets():
     cols = [desc[0] for desc in cursor.description]
     incidencias = [dict(zip(cols, row)) for row in rows]
 
-    # Convertir timestamptz a string para JSON
     for inc in incidencias:
         if inc.get('creado_en'):
             inc['creado_en'] = inc['creado_en'].isoformat()
+        # Hash SHA-256 canónico del registro
+        canonical_str = f"{inc['protocol_id']}|{inc['codigo_ine']}|{inc['tipo']}|{inc['descripcion']}"
+        inc['hash_sha256'] = hashlib.sha256(canonical_str.encode('utf-8')).hexdigest()
 
     json_path = os.path.join(data_dir, 'incidencias.json')
     with open(json_path, 'w', encoding='utf-8') as f:
         json.dump(incidencias, f, indent=2, ensure_ascii=False)
 
     csv_path = os.path.join(data_dir, 'incidencias.csv')
+    csv_cols = cols + ['hash_sha256']
     with open(csv_path, 'w', encoding='utf-8', newline='') as f:
-        writer = csv.DictWriter(f, fieldnames=cols)
+        writer = csv.DictWriter(f, fieldnames=csv_cols)
         writer.writeheader()
         writer.writerows(incidencias)
 
-    print(f">> Incidencias exportadas: {len(incidencias)} en {json_path} y {csv_path}")
+    print(f">> Incidencias exportadas: {len(incidencias)} en {json_path}")
 
     # 2. Exportar Normas Públicas
     cursor.execute("""
@@ -82,6 +95,8 @@ def export_public_datasets():
             nor['plazo_alegaciones_hasta'] = str(nor['plazo_alegaciones_hasta'])
         if nor.get('creado_en'):
             nor['creado_en'] = nor['creado_en'].isoformat()
+        canonical_str = f"{nor['protocol_id']}|{nor['codigo_ine']}|{nor['tipo']}|{nor['estado']}"
+        nor['hash_sha256'] = hashlib.sha256(canonical_str.encode('utf-8')).hexdigest()
 
     normas_json = os.path.join(data_dir, 'normas.json')
     with open(normas_json, 'w', encoding='utf-8') as f:
@@ -100,6 +115,40 @@ def export_public_datasets():
 
     cursor.close()
     conn.close()
+
+    # 4. Generar Manifiesto de Integridad y Verificación Criptográfica
+    archivos = ['incidencias.json', 'incidencias.csv', 'normas.json', 'fuentes.json']
+    file_hashes = {}
+    combined_hashes = ""
+
+    for fname in archivos:
+        fpath = os.path.join(data_dir, fname)
+        h = calcular_hash_archivo(fpath)
+        size = os.path.getsize(fpath)
+        file_hashes[fname] = {'sha256': h, 'bytes': size}
+        combined_hashes += h
+
+    merkle_root = hashlib.sha256(combined_hashes.encode('utf-8')).hexdigest()
+
+    manifest = {
+        'version': '1.0',
+        'exported_at': datetime.now(timezone.utc).isoformat(),
+        'responsable': 'Jose Montero',
+        'email_contacto': 'info@slowvan.com',
+        'licencia': 'AGPL-3.0',
+        'total_incidencias': len(incidencias),
+        'total_normas': len(normas),
+        'total_fuentes': len(fuentes),
+        'archivos': file_hashes,
+        'merkle_root_sha256': merkle_root,
+        'instrucciones_verificacion': 'Ejecuta python engine/verify_public_data.py para auditar la integridad de todos los archivos sin conexión a la base de datos.'
+    }
+
+    manifest_path = os.path.join(data_dir, 'manifest.json')
+    with open(manifest_path, 'w', encoding='utf-8') as f:
+        json.dump(manifest, f, indent=2, ensure_ascii=False)
+
+    print(f">> Manifiesto criptográfico generado: {manifest_path} (Merkle Root: {merkle_root[:16]}...)")
 
 if __name__ == '__main__':
     export_public_datasets()
