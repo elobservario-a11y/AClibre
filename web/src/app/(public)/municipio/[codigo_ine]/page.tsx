@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import Image from 'next/image'
 import SuscripcionAlertas from '@/components/SuscripcionAlertas'
-import GeneradorAlegacionModal from '@/components/GeneradorAlegacionModal'
+import GeneradorEscritoModal from '@/components/GeneradorEscritoModal'
 
 export const revalidate = 60
 
@@ -160,18 +160,36 @@ export default async function MunicipioPage({ params }: PageProps) {
                             <span>⏳ <strong>Cuenta atrás:</strong> Quedan <strong>{diasRestantes} días</strong> para presentar alegaciones</span>
                             <span className="font-mono text-[11px] font-bold text-red-700">Vence: {norma.plazo_alegaciones_hasta}</span>
                           </div>
-                          <GeneradorAlegacionModal
+                          <GeneradorEscritoModal
+                            tipoDocumento="alegacion"
                             protocolId={norma.protocol_id}
                             municipioNombre={muni.nombre}
-                            plazoHasta={norma.plazo_alegaciones_hasta}
                           />
                         </div>
                       ) : (
-                        <span>Plazo de alegaciones cerrado el {norma.plazo_alegaciones_hasta}</span>
+                        <div className="flex flex-wrap items-center justify-between gap-1">
+                          <span>Plazo de alegaciones cerrado el {norma.plazo_alegaciones_hasta}</span>
+                          <GeneradorEscritoModal
+                            tipoDocumento="reposicion"
+                            protocolId={norma.protocol_id}
+                            municipioNombre={muni.nombre}
+                            labelBoton="⚖️ Recurso de Reposición"
+                          />
+                        </div>
                       )}
                     </div>
                   )
                 })()}
+                {(!norma.plazo_alegaciones_hasta || norma.estado === 'vigente') && (
+                  <div className="mt-3">
+                    <GeneradorEscritoModal
+                      tipoDocumento="reposicion"
+                      protocolId={norma.protocol_id}
+                      municipioNombre={muni.nombre}
+                      labelBoton="⚖️ Preparar Recurso de Reposición (PDF)"
+                    />
+                  </div>
+                )}
                 {norma.hallazgos && norma.hallazgos.length > 0 && (
                   <div className="mt-3 space-y-2 border-t pt-3">
                     {norma.hallazgos.map((h: any, idx: number) => (
@@ -213,6 +231,18 @@ export default async function MunicipioPage({ params }: PageProps) {
                   <span>{new Date(inc.creado_en).toLocaleDateString('es-ES')}</span>
                   <span>{ESCALERA_NIVEL[inc.nivel_confianza]?.label}</span>
                 </div>
+
+                {/* Si es señal ilegal o bloqueo de acceso, permitir pedir expediente por Transparencia */}
+                {(inc.tipo === 'senal_ilegal' || inc.tipo === 'bloqueo_acceso') && (
+                  <div className="mt-3 border-t pt-3">
+                    <GeneradorEscritoModal
+                      tipoDocumento="transparencia"
+                      protocolId={inc.protocol_id}
+                      municipioNombre={muni.nombre}
+                      labelBoton="🔍 Pedir expediente por Transparencia"
+                    />
+                  </div>
+                )}
               </div>
             ))}
           </div>
