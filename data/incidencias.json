@@ -1,0 +1,15 @@
+[
+  {
+    "protocol_id": "ES-MU-01051-INC-2026-001",
+    "codigo_ine": "01051",
+    "municipio": "Agurain/Salvatierra",
+    "provincia": "Araba",
+    "comunidad": "País Vasco",
+    "tipo": "senal_ilegal",
+    "descripcion": "[1/20] Señal de prohibido autocaravanas colocada en entrada de playa, sin número de expediente ni ordenanza. en Agurain/Salvatierra.",
+    "nivel_confianza": 2,
+    "lon_publica": -2.38663585776971,
+    "lat_publica": 42.8389360861267,
+    "creado_en": "2026-09-03T16:20:24.216006+00:00"
+  }
+]

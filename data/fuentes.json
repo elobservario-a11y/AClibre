@@ -1,0 +1,366 @@
+[
+  {
+    "id": 16,
+    "provincia": "A Coruña",
+    "tipo": "rss",
+    "url_base": "https://bop.dacoruna.gal/",
+    "activo": false
+  },
+  {
+    "id": 2,
+    "provincia": "Albacete",
+    "tipo": "html",
+    "url_base": "https://boletin.dipualba.es",
+    "activo": false
+  },
+  {
+    "id": 3,
+    "provincia": "Alicante",
+    "tipo": "rss",
+    "url_base": "https://www.dip-alicante.es/bop/",
+    "activo": false
+  },
+  {
+    "id": 4,
+    "provincia": "Almería",
+    "tipo": "html",
+    "url_base": "https://www.dipalme.org/bop/",
+    "activo": false
+  },
+  {
+    "id": 1,
+    "provincia": "Araba/Álava",
+    "tipo": "html",
+    "url_base": "https://botha.araba.eus",
+    "activo": false
+  },
+  {
+    "id": 5,
+    "provincia": "Asturias",
+    "tipo": "rss",
+    "url_base": "https://sede.asturias.es/bopa",
+    "activo": false
+  },
+  {
+    "id": 6,
+    "provincia": "Ávila",
+    "tipo": "pdf_fijo",
+    "url_base": "https://www.diputacionavila.es/bop/",
+    "activo": false
+  },
+  {
+    "id": 7,
+    "provincia": "Badajoz",
+    "tipo": "rss",
+    "url_base": "https://www.dip-badajoz.es/bop/",
+    "activo": false
+  },
+  {
+    "id": 8,
+    "provincia": "Barcelona",
+    "tipo": "rss",
+    "url_base": "https://bop.diba.cat/",
+    "activo": false
+  },
+  {
+    "id": 48,
+    "provincia": "Bizkaia",
+    "tipo": "html",
+    "url_base": "https://bob.bizkaia.eus/",
+    "activo": false
+  },
+  {
+    "id": 9,
+    "provincia": "Burgos",
+    "tipo": "html",
+    "url_base": "https://www.diputaciondeburgos.es/bop/",
+    "activo": false
+  },
+  {
+    "id": 10,
+    "provincia": "Cáceres",
+    "tipo": "rss",
+    "url_base": "https://bop.dip-caceres.es/",
+    "activo": false
+  },
+  {
+    "id": 11,
+    "provincia": "Cádiz",
+    "tipo": "html",
+    "url_base": "https://www.dipucadiz.es/bop/",
+    "activo": false
+  },
+  {
+    "id": 12,
+    "provincia": "Cantabria",
+    "tipo": "html",
+    "url_base": "https://boc.cantabria.es/",
+    "activo": false
+  },
+  {
+    "id": 13,
+    "provincia": "Castellón",
+    "tipo": "html",
+    "url_base": "https://bop.dipcas.es/",
+    "activo": false
+  },
+  {
+    "id": 51,
+    "provincia": "Ceuta",
+    "tipo": "pdf_fijo",
+    "url_base": "https://www.ceuta.es/bocce/",
+    "activo": false
+  },
+  {
+    "id": 14,
+    "provincia": "Ciudad Real",
+    "tipo": "html",
+    "url_base": "https://bop.dipucr.es/",
+    "activo": false
+  },
+  {
+    "id": 15,
+    "provincia": "Córdoba",
+    "tipo": "rss",
+    "url_base": "https://bop.dipucordoba.es/",
+    "activo": false
+  },
+  {
+    "id": 17,
+    "provincia": "Cuenca",
+    "tipo": "html",
+    "url_base": "https://www.dipucuenca.es/bop",
+    "activo": false
+  },
+  {
+    "id": 21,
+    "provincia": "Gipuzkoa",
+    "tipo": "html",
+    "url_base": "https://bog.gipuzkoa.eus/",
+    "activo": false
+  },
+  {
+    "id": 18,
+    "provincia": "Girona",
+    "tipo": "rss",
+    "url_base": "https://www.ddgi.cat/bop/",
+    "activo": false
+  },
+  {
+    "id": 19,
+    "provincia": "Granada",
+    "tipo": "html",
+    "url_base": "https://www.dipgra.es/bop/",
+    "activo": false
+  },
+  {
+    "id": 20,
+    "provincia": "Guadalajara",
+    "tipo": "html",
+    "url_base": "https://boletin.dguadalajara.es/",
+    "activo": false
+  },
+  {
+    "id": 22,
+    "provincia": "Huelva",
+    "tipo": "html",
+    "url_base": "https://www.diphuelva.es/bop/",
+    "activo": false
+  },
+  {
+    "id": 23,
+    "provincia": "Huesca",
+    "tipo": "html",
+    "url_base": "https://www.dphuesca.es/bop",
+    "activo": false
+  },
+  {
+    "id": 24,
+    "provincia": "Illes Balears",
+    "tipo": "rss",
+    "url_base": "https://boib.caib.es/",
+    "activo": false
+  },
+  {
+    "id": 25,
+    "provincia": "Jaén",
+    "tipo": "html",
+    "url_base": "https://bop.dipujaen.es/",
+    "activo": false
+  },
+  {
+    "id": 37,
+    "provincia": "La Rioja",
+    "tipo": "rss",
+    "url_base": "https://web.larioja.org/bor-portada/",
+    "activo": false
+  },
+  {
+    "id": 35,
+    "provincia": "Las Palmas",
+    "tipo": "html",
+    "url_base": "https://www.boplaspalmas.net/",
+    "activo": false
+  },
+  {
+    "id": 26,
+    "provincia": "León",
+    "tipo": "html",
+    "url_base": "https://www.dipuleon.es/bop/",
+    "activo": false
+  },
+  {
+    "id": 27,
+    "provincia": "Lleida",
+    "tipo": "rss",
+    "url_base": "https://bop.diputaciolleida.cat/",
+    "activo": false
+  },
+  {
+    "id": 28,
+    "provincia": "Lugo",
+    "tipo": "html",
+    "url_base": "https://deputacionlugo.gal/bop/",
+    "activo": false
+  },
+  {
+    "id": 29,
+    "provincia": "Madrid",
+    "tipo": "rss",
+    "url_base": "https://www.bocm.es/",
+    "activo": false
+  },
+  {
+    "id": 30,
+    "provincia": "Málaga",
+    "tipo": "rss",
+    "url_base": "https://www.malaga.es/bop/",
+    "activo": false
+  },
+  {
+    "id": 52,
+    "provincia": "Melilla",
+    "tipo": "pdf_fijo",
+    "url_base": "https://www.melilla.es/bome/",
+    "activo": false
+  },
+  {
+    "id": 31,
+    "provincia": "Murcia",
+    "tipo": "rss",
+    "url_base": "https://www.borm.es/",
+    "activo": false
+  },
+  {
+    "id": 32,
+    "provincia": "Navarra",
+    "tipo": "rss",
+    "url_base": "https://bon.navarra.es/",
+    "activo": false
+  },
+  {
+    "id": 33,
+    "provincia": "Ourense",
+    "tipo": "html",
+    "url_base": "https://bopo.depourense.es/",
+    "activo": false
+  },
+  {
+    "id": 34,
+    "provincia": "Palencia",
+    "tipo": "html",
+    "url_base": "https://www.diputaciondepalencia.es/bop",
+    "activo": false
+  },
+  {
+    "id": 36,
+    "provincia": "Pontevedra",
+    "tipo": "rss",
+    "url_base": "https://boppo.depo.gal/",
+    "activo": false
+  },
+  {
+    "id": 38,
+    "provincia": "Salamanca",
+    "tipo": "html",
+    "url_base": "https://www.diputaciondesalamanca.gob.es/bop/",
+    "activo": false
+  },
+  {
+    "id": 39,
+    "provincia": "Santa Cruz de Tenerife",
+    "tipo": "html",
+    "url_base": "https://www.bopsantacruzdetenerife.es/",
+    "activo": false
+  },
+  {
+    "id": 40,
+    "provincia": "Segovia",
+    "tipo": "html",
+    "url_base": "https://www.dipsegovia.es/bop",
+    "activo": false
+  },
+  {
+    "id": 41,
+    "provincia": "Sevilla",
+    "tipo": "html",
+    "url_base": "https://www.dipusevilla.es/bop/",
+    "activo": false
+  },
+  {
+    "id": 42,
+    "provincia": "Soria",
+    "tipo": "html",
+    "url_base": "https://bop.dipsoria.es/",
+    "activo": false
+  },
+  {
+    "id": 43,
+    "provincia": "Tarragona",
+    "tipo": "rss",
+    "url_base": "https://www.dipta.cat/bop/",
+    "activo": false
+  },
+  {
+    "id": 44,
+    "provincia": "Teruel",
+    "tipo": "html",
+    "url_base": "https://236ws.dpteruel.es/bop/",
+    "activo": false
+  },
+  {
+    "id": 45,
+    "provincia": "Toledo",
+    "tipo": "html",
+    "url_base": "https://www.diputoledo.es/bop",
+    "activo": false
+  },
+  {
+    "id": 46,
+    "provincia": "Valencia",
+    "tipo": "rss",
+    "url_base": "https://bop.dival.es/",
+    "activo": false
+  },
+  {
+    "id": 47,
+    "provincia": "Valladolid",
+    "tipo": "html",
+    "url_base": "https://bop.diputaciondevalladolid.es/",
+    "activo": false
+  },
+  {
+    "id": 49,
+    "provincia": "Zamora",
+    "tipo": "html",
+    "url_base": "https://bop.diputaciondezamora.es/",
+    "activo": false
+  },
+  {
+    "id": 50,
+    "provincia": "Zaragoza",
+    "tipo": "html",
+    "url_base": "https://bop.dpz.es/",
+    "activo": false
+  }
+]
