@@ -57,12 +57,12 @@ def generar_pdf_recurso_reposicion(
     # 2. Obtener hallazgos ordenados dinámicamente por prioridad y tasa de éxito
     cursor.execute("""
         select h.articulo, h.cita_literal, h.fundamento_ilegalidad,
-               coalesce(e.tasa_exito, 75.0) as tasa_exito,
-               coalesce(e.peso_prioridad, 50) as peso
+               coalesce(e.tasa_exito, 0.0) as tasa_exito,
+               coalesce(e.peso_prioridad, 0) as peso
         from public.hallazgos h
         left join public.efectividad_argumentos e on e.tipo_restriccion = h.tipo_restriccion
         where h.norma_id = %s
-        order by coalesce(e.peso_prioridad, 50) desc, coalesce(e.tasa_exito, 75.0) desc, h.id asc;
+        order by coalesce(e.peso_prioridad, 0) desc, coalesce(e.tasa_exito, 0.0) desc, h.id asc;
     """, (n_id,))
     hallazgos = cursor.fetchall()
 
