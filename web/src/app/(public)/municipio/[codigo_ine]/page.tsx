@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import Image from 'next/image'
 import SuscripcionAlertas from '@/components/SuscripcionAlertas'
+import GeneradorAlegacionModal from '@/components/GeneradorAlegacionModal'
 
 export const revalidate = 60
 
@@ -154,9 +155,16 @@ export default async function MunicipioPage({ params }: PageProps) {
                       activo ? 'border border-red-200 bg-red-50 text-red-900' : 'bg-gray-100 text-gray-500'
                     }`}>
                       {activo ? (
-                        <div className="flex flex-wrap items-center justify-between gap-1">
-                          <span>⏳ <strong>Cuenta atrás:</strong> Quedan <strong>{diasRestantes} días</strong> para presentar alegaciones</span>
-                          <span className="font-mono text-[11px] font-bold text-red-700">Vence: {norma.plazo_alegaciones_hasta}</span>
+                        <div>
+                          <div className="flex flex-wrap items-center justify-between gap-1">
+                            <span>⏳ <strong>Cuenta atrás:</strong> Quedan <strong>{diasRestantes} días</strong> para presentar alegaciones</span>
+                            <span className="font-mono text-[11px] font-bold text-red-700">Vence: {norma.plazo_alegaciones_hasta}</span>
+                          </div>
+                          <GeneradorAlegacionModal
+                            protocolId={norma.protocol_id}
+                            municipioNombre={muni.nombre}
+                            plazoHasta={norma.plazo_alegaciones_hasta}
+                          />
                         </div>
                       ) : (
                         <span>Plazo de alegaciones cerrado el {norma.plazo_alegaciones_hasta}</span>
