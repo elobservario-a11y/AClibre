@@ -10,14 +10,13 @@ export default async function BajaAlertasPage({ searchParams }: PageProps) {
   const { token } = await searchParams
   let dadaDeBaja = false
 
-  if (token) {
+  if (token && typeof token === 'string' && token.trim().length > 0) {
     const supabase = createAdminClient()
-    const { error } = await supabase
-      .from('suscripciones_alertas')
-      .update({ activa: false })
-      .eq('token_baja', token)
+    const { data: cancelada, error } = await supabase.rpc('cancelar_suscripcion_alerta', {
+      p_token: token.trim(),
+    })
 
-    if (!error) dadaDeBaja = true
+    if (!error && cancelada) dadaDeBaja = true
   }
 
   return (

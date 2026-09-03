@@ -1,41 +1,55 @@
 import { NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/admin'
-
-// Tokens estáticos de nodos federados. En producción: mover a tabla federation_tokens en BD.
-const FEDERATION_TOKENS: Record<string, { nombre: string; nivel_confianza: number; rate_limit: number }> = {
-  'tok_park4night_2026': { nombre: 'Park4Night', nivel_confianza: 4, rate_limit: 500 },
-  'tok_caramaps_2026':   { nombre: 'Caramaps',   nivel_confianza: 4, rate_limit: 500 },
-  'tok_feaa_2026':       { nombre: 'FEAA',        nivel_confianza: 3, rate_limit: 100 },
-  'tok_slowvan_test':    { nombre: 'Test Slowvan', nivel_confianza: 2, rate_limit: 20  },
-}
+import { obfuscateCoords } from '@/lib/geo'
 
 const TIPOS_VALIDOS = ['senal_ilegal', 'multa', 'desalojo', 'bloqueo_acceso']
-
-// Bounding box peninsular + Baleares (excluyendo Canarias para simplificar)
 const SPAIN_BOUNDS = { minLat: 35.0, maxLat: 44.5, minLon: -9.5, maxLon: 4.5 }
 
 export async function POST(request: Request) {
   try {
     const body = await request.json()
-    const { federation_token, fuente_nombre, tipo, descripcion, lat, lon, nivel_confianza, url_evidencia } = body
+    const { federation_token, tipo, descripcion, lat, lon, nivel_confianza, url_evidencia } = body
 
-    // 1. Validar token de federación
-    const nodo = FEDERATION_TOKENS[federation_token]
-    if (!nodo) {
-      return NextResponse.json({ error: 'Token de federación inválido o no reconocido' }, { status: 400 })
+    if (!federation_token || typeof federation_token !== 'string') {
+      return NextResponse.json({ error: 'Falta token de federación' }, { status: 400 })
     }
 
-    // 2. Validar tipo canónico
+    const supabase = createAdminClient()
+
+    // 1. Validar token contra la tabla federation_tokens en base de datos
+    const { data: nodo, error: tokenErr } = await supabase
+      .from('federation_tokens')
+      .select('token, nombre_nodo, nivel_confianza, rate_limit_hora, activo')
+      .eq('token', federation_token.trim())
+      .eq('activo', true)
+      .single()
+
+    if (tokenErr || !nodo) {
+      return NextResponse.json({ error: 'Token de federación inválido, inactivo o no reconocido' }, { status: 400 })
+    }
+
+    // 2. Control de rate limit real por nodo en la última hora
+    const { count: reportesHora } = await supabase
+      .from('incidencias')
+      .select('*', { count: 'exact', head: true })
+      .eq('fuente_federacion', nodo.nombre_nodo)
+      .gte('creado_en', new Date(Date.now() - 60 * 60 * 1000).toISOString())
+
+    if ((reportesHora || 0) >= nodo.rate_limit_hora) {
+      return NextResponse.json({ error: 'Límite de peticiones por hora excedido para este nodo' }, { status: 429 })
+    }
+
+    // 3. Validar tipo canónico
     if (!TIPOS_VALIDOS.includes(tipo)) {
       return NextResponse.json({ error: `Tipo no válido. Valores aceptados: ${TIPOS_VALIDOS.join(', ')}` }, { status: 400 })
     }
 
-    // 3. Validar descripción
-    if (!descripcion || descripcion.trim().length < 20) {
+    // 4. Validar descripción
+    if (!descripcion || typeof descripcion !== 'string' || descripcion.trim().length < 20) {
       return NextResponse.json({ error: 'La descripción debe tener al menos 20 caracteres' }, { status: 400 })
     }
 
-    // 4. Validar coordenadas (territorio español peninsular + Baleares)
+    // 5. Validar coordenadas
     const latNum = parseFloat(lat)
     const lonNum = parseFloat(lon)
     if (
@@ -48,9 +62,7 @@ export async function POST(request: Request) {
       }, { status: 400 })
     }
 
-    const supabase = createAdminClient()
-
-    // 5. Buscar municipio más cercano por coordenadas
+    // 6. Buscar municipio más cercano por coordenadas
     const { data: municipios, error: muniErr } = await supabase.rpc('municipio_mas_cercano', {
       p_lat: latNum,
       p_lon: lonNum,
@@ -62,7 +74,7 @@ export async function POST(request: Request) {
 
     const municipio = municipios[0]
 
-    // 6. Comprobar duplicados en ±100m y mismo tipo en las últimas 24h
+    // 7. Comprobar duplicados en ±100m y mismo tipo en las últimas 24h
     const { data: duplicado } = await supabase.rpc('incidencia_duplicada_cercana', {
       p_lat: latNum,
       p_lon: lonNum,
@@ -74,17 +86,17 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Incidencia duplicada: ya existe un reporte del mismo tipo en ±100m en las últimas 24h' }, { status: 409 })
     }
 
-    // 7. Generar protocol_id
-    const year = new Date().getFullYear()
-    const { count } = await supabase
-      .from('incidencias')
-      .select('*', { count: 'exact', head: true })
-      .eq('municipio_id', municipio.id)
+    // 8. Generar protocol_id de forma atómica mediante la función de base de datos
+    const { data: protocolId, error: rpcErr } = await supabase
+      .rpc('generar_protocol_id', { p_ine: municipio.codigo_ine, p_tipo: 'INC' })
 
-    const seq = String((count || 0) + 1).padStart(3, '0')
-    const protocolId = `ES-MU-${municipio.codigo_ine}-INC-${year}-${seq}`
+    if (rpcErr || !protocolId) {
+      return NextResponse.json({ error: 'Error al generar identificador de protocolo' }, { status: 500 })
+    }
 
-    // 8. Crear incidencia en cola de moderación
+    // 9. Ofuscación de coordenadas a ~100m para la columna pública
+    const pub = obfuscateCoords(latNum, lonNum)
+
     const nivelFinal = nivel_confianza
       ? Math.min(Math.max(parseInt(nivel_confianza), 1), nodo.nivel_confianza)
       : nodo.nivel_confianza
@@ -95,11 +107,11 @@ export async function POST(request: Request) {
       tipo,
       descripcion: descripcion.trim(),
       geom: `SRID=4326;POINT(${lonNum} ${latNum})`,
-      geom_publica: `SRID=4326;POINT(${lonNum} ${latNum})`,
+      geom_publica: `SRID=4326;POINT(${pub.lon} ${pub.lat})`,
       nivel_confianza: nivelFinal,
       estado_moderacion: 'pendiente',
-      motivo_moderacion: `Reporte federado recibido de ${nodo.nombre}`,
-      fuente_federacion: nodo.nombre,
+      motivo_moderacion: `Reporte federado recibido de ${nodo.nombre_nodo}`,
+      fuente_federacion: nodo.nombre_nodo,
       url_evidencia_externa: url_evidencia || null,
     })
 
@@ -112,7 +124,7 @@ export async function POST(request: Request) {
         status: 'created',
         protocol_id: protocolId,
         message: 'Reporte federado registrado en cola de moderación',
-        fuente: nodo.nombre,
+        fuente: nodo.nombre_nodo,
         municipio: municipio.nombre,
       },
       { status: 201 }
