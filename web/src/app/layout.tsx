@@ -30,6 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </a>
             <nav className="flex items-center gap-4 text-sm">
               <a href="/mapa" className="text-gray-600 hover:text-orange-600">Mapa</a>
+              <a href="/contagio" className="text-gray-600 hover:text-orange-600">Contagio</a>
               <a href="/alertas" className="text-gray-600 hover:text-orange-600">Alertas</a>
               <a href="/mis-acciones" className="font-semibold text-gray-700 hover:text-orange-600">Mis Acciones</a>
               <a
