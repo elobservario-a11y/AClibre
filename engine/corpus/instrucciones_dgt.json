@@ -1,27 +1,5 @@
 [
   {
-    "id": "DGT-PROT-2023-14",
-    "nombre": "Instrucción PROT 2023/14: Autocaravanas",
-    "organismo": "Dirección General de Tráfico (Ministerio del Interior)",
-    "fecha_disposicion": "2023-07-11",
-    "fecha_consulta": "2026-09-03",
-    "estado": "vigente",
-    "url_oficial": "https://www.dgt.es/muevete-con-seguridad/viaja-seguro/en-autocaravana/",
-    "hash_sha256": "c8f2a637b98d2547b74499ff39e1a8bb15367756f70932205562d9803b9b00ef",
-    "criterios_rectores": [
-      {
-        "principio": "Equiparación de estacionamiento",
-        "cita_literal": "El estacionamiento de autocaravanas no puede ser objeto de discriminación respecto del resto de vehículos cuando concurran las mismas circunstancias de masa y dimensiones. El uso interno del vehículo forma parte de su destino reglamentario y no altera la naturaleza del estacionamiento.",
-        "fundamento": "La ordenanza municipal no puede prohibir genéricamente a autocaravanas si permite vehículos de análogo gálibo o MMA."
-      },
-      {
-        "principio": "Pernocta en el interior vs Acampada",
-        "cita_literal": "El hecho de que los ocupantes permanezcan en el interior del vehículo e incluso pernocten en el mismo no transforma el estacionamiento en acampada, siempre que la actividad que se desarrolle en el interior no trascienda al exterior mediante el despliegue de elementos (toldos, soportes de estabilización, mesas, sillas) o vertido de fluidos.",
-        "fundamento": "Pernoctar dentro de un vehículo correctamente estacionado sin emitir ruidos ni desplegar enseres no es acampada ilegal."
-      }
-    ]
-  },
-  {
     "id": "DGT-08-V-74",
     "nombre": "Instrucción 08/V-74: Autocaravanas (Doctrina histórica fundacional)",
     "organismo": "Dirección General de Tráfico (Ministerio del Interior)",

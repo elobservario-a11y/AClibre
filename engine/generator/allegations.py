@@ -210,8 +210,7 @@ def generar_pdf_alegacion(
     if hallazgos:
         for idx, h in enumerate(hallazgos, 1):
             art, cita, tipo_rest, fund, tasa, peso = h
-            badge_efectividad = f" <font size='8' color='#16a34a'>[Efectividad jurídica contrastada: {tasa}% de resoluciones favorables]</font>" if tasa >= 80 else ""
-            story.append(Paragraph(f"<b>2.{idx}. Respecto al precepto: {art}</b>{badge_efectividad}", style_bold))
+            story.append(Paragraph(f"<b>2.{idx}. Respecto al precepto: {art}</b>", style_bold))
             story.append(Paragraph(f"«{cita}»", style_cita))
             story.append(Paragraph(f"<b>Fundamento de ilegalidad:</b> {fund}", style_body))
     else:

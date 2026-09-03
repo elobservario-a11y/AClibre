@@ -169,8 +169,7 @@ def generar_pdf_recurso_reposicion(
     if hallazgos:
         for idx, h in enumerate(hallazgos, 1):
             art, cita, fund, tasa, peso = h
-            badge_efectividad = f" <font size='8' color='#dc2626'>[Solidez jurídica: {tasa}% de éxito probado]</font>" if tasa >= 80 else ""
-            story.append(Paragraph(f"<b>2.{idx}. Precepto impugnado: {art}</b>{badge_efectividad}", style_bold))
+            story.append(Paragraph(f"<b>2.{idx}. Precepto impugnado: {art}</b>", style_bold))
             story.append(Paragraph(f"«{cita}»", style_cita))
             story.append(Paragraph(f"<b>Fundamento de nulidad:</b> {fund}", style_body))
     else:

@@ -1,30 +1,30 @@
 {
   "version": "1.0",
-  "exported_at": "2026-09-03T20:07:25.846399+00:00",
+  "exported_at": "2026-09-03T21:42:15.274008+00:00",
   "responsable": "Jose Montero",
   "email_contacto": "info@slowvan.com",
   "licencia": "AGPL-3.0",
-  "total_incidencias": 29,
-  "total_normas": 29,
+  "total_incidencias": 0,
+  "total_normas": 0,
   "total_fuentes": 52,
   "archivos": {
     "incidencias.json": {
-      "sha256": "1c0458d11c52af45cb320f03654858fcd34142b4c958c522daae1ebea58a04ec",
-      "bytes": 17267
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
     },
     "incidencias.csv": {
-      "sha256": "641cc50e9b904126ef3c1048089b3d6d1c1996a7f468b30c17ca33c04669f12b",
-      "bytes": 9660
+      "sha256": "3cba4e9f490c8a6c067ba4f901c8fde113d6d5306449fadba889575c6dcb5fc2",
+      "bytes": 133
     },
     "normas.json": {
-      "sha256": "c39fbb49a6f874c3bb328fbd85bd59aace9de001a42a7f0a04942efeabce73ff",
-      "bytes": 13460
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
     },
     "fuentes.json": {
       "sha256": "42c1bb0610430c9871ce0f75f165f1f41db9f5d08567384b957ebe0ad6059e07",
       "bytes": 7604
     }
   },
-  "merkle_root_sha256": "2dd535269c391be35b278e887094ded8edfebf2414d3a9c93f8e0010bffa1f66",
+  "merkle_root_sha256": "51e99868c25cebe19fd0543b09a04afc1eee7ff4d2456e20f09092106bbcd07a",
   "instrucciones_verificacion": "Ejecuta python engine/verify_public_data.py para auditar la integridad de todos los archivos sin conexión a la base de datos."
 }

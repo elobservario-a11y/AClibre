@@ -74,10 +74,10 @@ def verificar_integridad_descentralizada():
             errores += reg_err
 
     if errores == 0:
-        print("\n🏆 INTEGRIDAD 100% VERIFICADA: Los datos públicos no han sido alterados ni manipulados.")
+        print("\nVerificación criptográfica finalizada: los hashes de ficheros y registros coinciden con el manifiesto.")
         sys.exit(0)
     else:
-        print(f"\n⚠️ AUDITORÍA FALLIDA: Se detectaron {errores} errores de integridad.")
+        print(f"\nAuditoría fallida: se detectaron {errores} discrepancias de hash.")
         sys.exit(1)
 
 if __name__ == '__main__':
