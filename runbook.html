@@ -1,0 +1,508 @@
+<title>Runbook AC en Lucha</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#FCFCFD; --surface:#FFFFFF; --surface-2:#F1F4F8;
+  --ink:#111820; --ink-2:#48545F; --ink-3:#7C8895;
+  --line:#DCE3EA; --line-strong:#C3CDD7;
+  --accent:#1B5FA8; --accent-soft:#E8F0F9;
+  --warn:#9C5E06; --warn-soft:#FAF0DD;
+  --risk:#A02219; --risk-soft:#FAE9E7;
+  --ok:#1B6845; --ok-soft:#E2F0E9;
+  --shadow:0 1px 2px rgba(17,24,32,.05);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#0D1218; --surface:#151C24; --surface-2:#1B242E;
+    --ink:#E7ECF1; --ink-2:#A7B3BF; --ink-3:#7A8794;
+    --line:#27313C; --line-strong:#37434F;
+    --accent:#74ADE7; --accent-soft:#142434;
+    --warn:#D8A244; --warn-soft:#2A2317;
+    --risk:#E88A81; --risk-soft:#2C1A18;
+    --ok:#68BE93; --ok-soft:#12261D;
+    --shadow:0 1px 2px rgba(0,0,0,.4);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0D1218; --surface:#151C24; --surface-2:#1B242E;
+  --ink:#E7ECF1; --ink-2:#A7B3BF; --ink-3:#7A8794;
+  --line:#27313C; --line-strong:#37434F;
+  --accent:#74ADE7; --accent-soft:#142434;
+  --warn:#D8A244; --warn-soft:#2A2317;
+  --risk:#E88A81; --risk-soft:#2C1A18;
+  --ok:#68BE93; --ok-soft:#12261D;
+  --shadow:0 1px 2px rgba(0,0,0,.4);
+}
+*{box-sizing:border-box}
+body{
+  background:var(--ground); color:var(--ink);
+  font-family:"Source Serif 4",Georgia,"Times New Roman",serif;
+  font-size:17px; line-height:1.62; margin:0;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px; margin:0 auto; padding:0 28px 96px}
+
+.mast{border-bottom:1px solid var(--line-strong); padding:44px 0 24px; margin-bottom:44px}
+.kicker{
+  font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:11.5px;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--accent);
+  display:flex; gap:12px; flex-wrap:wrap; align-items:center;
+}
+.kicker span{color:var(--ink-3)}
+h1{
+  font-family:Archivo,"Helvetica Neue",Arial,sans-serif; font-weight:700;
+  font-size:clamp(34px,5.4vw,54px); line-height:1.04; letter-spacing:-.022em;
+  margin:16px 0 12px; text-wrap:balance;
+}
+.standfirst{font-size:19px; color:var(--ink-2); max-width:62ch; margin:0}
+
+h2{
+  font-family:Archivo,sans-serif; font-weight:600; font-size:26px;
+  letter-spacing:-.014em; line-height:1.2; margin:0; text-wrap:balance;
+}
+h3{
+  font-family:Archivo,sans-serif; font-weight:600; font-size:17.5px;
+  letter-spacing:-.006em; margin:0; text-wrap:balance;
+}
+section{
+  padding-top:52px; margin-top:52px; border-top:1px solid var(--line);
+  display:grid; grid-template-columns:64px minmax(0,1fr); gap:0 20px;
+}
+section:first-of-type{border-top:none; margin-top:0; padding-top:0}
+.num{
+  font-family:"IBM Plex Mono",monospace; font-size:12px; font-weight:500;
+  color:var(--ink-3); padding-top:8px; letter-spacing:.04em;
+}
+.body{min-width:0}
+.body>*+*{margin-top:18px}
+p{margin:0}
+.lede{color:var(--ink-2); max-width:68ch}
+ul,ol{margin:0; padding-left:1.15em}
+li{margin-top:7px}
+li::marker{color:var(--ink-3)}
+strong{font-weight:600}
+em{color:var(--ink-2)}
+code,.mono{font-family:"IBM Plex Mono",monospace; font-size:.86em}
+code{background:var(--surface-2); padding:1px 5px; border-radius:3px; color:var(--ink)}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent); outline-offset:2px; border-radius:2px}
+
+.scroll{overflow-x:auto}
+table{border-collapse:collapse; width:100%; font-size:15px; min-width:520px}
+th{
+  font-family:Archivo,sans-serif; font-weight:600; font-size:11.5px;
+  letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3);
+  text-align:left; padding:0 14px 8px 0; border-bottom:1px solid var(--line-strong);
+  white-space:nowrap;
+}
+td{padding:11px 14px 11px 0; border-bottom:1px solid var(--line); vertical-align:top; color:var(--ink-2)}
+td:first-child{color:var(--ink); font-weight:600; font-family:Archivo,sans-serif; font-size:14.5px}
+td.n{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums; white-space:nowrap}
+tr:last-child td{border-bottom:none}
+
+.note{
+  border-left:3px solid var(--accent); background:var(--accent-soft);
+  padding:14px 18px; font-size:15.5px; border-radius:0 4px 4px 0;
+}
+.note.warn{border-left-color:var(--warn); background:var(--warn-soft)}
+.note.risk{border-left-color:var(--risk); background:var(--risk-soft)}
+.note .tag{
+  font-family:Archivo,sans-serif; font-weight:600; font-size:11px;
+  letter-spacing:.1em; text-transform:uppercase; display:block; margin-bottom:5px;
+  color:var(--accent);
+}
+.note.warn .tag{color:var(--warn)}
+.note.risk .tag{color:var(--risk)}
+
+.ladder{border:1px solid var(--line); border-radius:5px; overflow:hidden}
+.rung{display:grid; grid-template-columns:34px 190px minmax(0,1fr); gap:14px; align-items:start;
+  padding:12px 16px; border-bottom:1px solid var(--line); background:var(--surface); font-size:15px}
+.rung:last-child{border-bottom:none}
+.rung b{font-family:Archivo,sans-serif; font-weight:600; font-size:13.5px; color:var(--ink)}
+.rung .lvl{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--ink-3); padding-top:2px}
+.rung .who{color:var(--ink-2); font-size:14.5px}
+.dot{display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:6px}
+
+.week{border-top:1px solid var(--line); padding:24px 0 4px; display:grid; gap:14px}
+.week:first-of-type{border-top:1px solid var(--line-strong)}
+.whead{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap}
+.wtag{font-family:"IBM Plex Mono",monospace; font-size:12px; font-weight:600; color:var(--accent);
+  letter-spacing:.06em; white-space:nowrap}
+.wgoal{color:var(--ink-2); font-size:15.5px; font-style:italic}
+.done{background:var(--surface-2); border-radius:4px; padding:10px 14px; font-size:14.5px; color:var(--ink-2)}
+.done b{font-family:Archivo,sans-serif; font-size:11px; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--ink-3); display:block; margin-bottom:3px; font-weight:600}
+
+.pipe{display:flex; flex-wrap:wrap; gap:8px; font-size:14px}
+.stage{flex:1 1 140px; min-width:140px; background:var(--surface); border:1px solid var(--line);
+  border-radius:5px; padding:11px 13px; box-shadow:var(--shadow)}
+.stage b{display:block; font-family:Archivo,sans-serif; font-weight:600; font-size:13px; margin-bottom:3px}
+.stage span{color:var(--ink-2); font-size:13.5px; line-height:1.45; display:block}
+.stage .vol{font-family:"IBM Plex Mono",monospace; font-size:11.5px; color:var(--accent); margin-top:6px}
+
+.kv{display:grid; grid-template-columns:auto minmax(0,1fr); gap:8px 18px; font-size:15.5px; margin:0}
+.kv dt{font-family:Archivo,sans-serif; font-weight:600; font-size:14px; color:var(--ink)}
+.kv dd{margin:0; color:var(--ink-2)}
+
+footer{margin-top:64px; padding-top:22px; border-top:1px solid var(--line-strong);
+  font-size:13.5px; color:var(--ink-3); font-family:"IBM Plex Mono",monospace}
+
+@media (max-width:720px){
+  body{font-size:16.5px}
+  .wrap{padding:0 20px 72px}
+  section{grid-template-columns:1fr; gap:12px}
+  .num{padding-top:0}
+  .rung{grid-template-columns:28px minmax(0,1fr)}
+  .rung .who{grid-column:2}
+  .kv{grid-template-columns:1fr; gap:2px}
+  .kv dd{margin-bottom:10px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+</style>
+
+<div class="wrap">
+
+<header class="mast">
+  <div class="kicker">Runbook de implementación <span>·</span> <span>v1 — 3 septiembre 2026</span> <span>·</span> <span>6 semanas hasta publicación</span></div>
+  <h1>Del cabreo en Facebook a un expediente administrativo</h1>
+  <p class="standfirst">Plan de ejecución para una plataforma abierta de defensa del caravaning en España, construida por una sola persona con ayuda de IA, con captación nacional desde el día uno y radar normativo automatizado detrás.</p>
+</header>
+
+<section>
+  <div class="num">00</div>
+  <div class="body">
+    <h2>Decisiones ya cerradas</h2>
+    <p class="lede">Esto no se vuelve a discutir. Cada respuesta tuya tiene una consecuencia técnica que condiciona todo lo que viene después.</p>
+    <div class="scroll"><table>
+      <thead><tr><th>Decisión</th><th>Consecuencia de diseño</th></tr></thead>
+      <tbody>
+        <tr><td>Solo + IA, sin equipo</td><td>Todo gestionado, nada de servidores propios. Cero tareas manuales recurrentes que no quepan en 20 min al día. Si una función necesita un becario, no se construye.</td></tr>
+        <tr><td>Proyecto personal, das la cara</td><td>Eres responsable del tratamiento a título personal. Aviso legal con tu nombre, correo de contacto y política de privacidad reales desde el primer día público.</td></tr>
+        <tr><td>Radar antes que motor jurídico</td><td>Semanas 2 a 4 son scraping y análisis. Las plantillas de alegación no llegan hasta la semana 6.</td></tr>
+        <tr><td>Toda España, sin pilotos</td><td>Recepción nacional inmediata; automatización de boletines progresiva. Ningún municipio queda fuera del formulario de reporte.</td></tr>
+        <tr><td>Cero datos de partida</td><td>La semana 1 no puede terminar con un catálogo vacío. Se arranca con el corpus que cargues tú: 25 o 30 ordenanzas y señales que ya conoces.</td></tr>
+        <tr><td>Fotos con moderación previa</td><td>Nada se publica sin que tú lo apruebes. Cola de moderación con acciones de un clic, usable desde el móvil.</td></tr>
+        <tr><td>Acciones duras permitidas</td><td>Términos de uso que trasladan la responsabilidad al usuario, más una raya legal explícita que sí tienes que hacer cumplir tú. Sección 08.</td></tr>
+        <tr><td>Coste de tu bolsillo</td><td>Objetivo por debajo de 30 € al mes hasta que haya tracción. Sin donaciones, sin pasarela de pago, sin financiación de litigios en la v1.</td></tr>
+        <tr><td>Éxito = 50 aportaciones</td><td>La puerta de entrada se prioriza sobre todo lo demás. Todo lo que no ayude a llegar a 50 se aparca.</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+
+<section>
+  <div class="num">01</div>
+  <div class="body">
+    <h2>La única corrección al orden que pediste</h2>
+    <p>Dijiste radar primero y motor de acción después. Se mantiene. Pero <strong>el formulario de reporte se publica en la semana 1</strong>, no en la 6.</p>
+    <p>El motivo es tu propia métrica. Un radar en solitario no produce aportaciones: produce alertas sobre municipios que nadie está mirando todavía. La captación no es la fase B — la fase B es la maquinaria jurídica, con plantillas, plazos, expedientes y seguimiento. El formulario es simplemente la puerta, y una plataforma con la puerta cerrada durante seis semanas llega al lanzamiento con la base de datos vacía y sin nada que enseñar.</p>
+    <div class="note">
+      <span class="tag">Regla de oro del proyecto</span>
+      Cada semana el sitio público tiene que estar vivo y ser útil por sí mismo. Nada de ramas largas ni de «lo enseño cuando esté completo». Si una semana no produce algo publicable, esa semana estaba mal planificada.
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="num">02</div>
+  <div class="body">
+    <h2>Nombre, tono y posicionamiento</h2>
+    <p class="lede">La única pregunta que dejaste sin contestar, y la que más condiciona el resto. Va mi recomendación con el porqué.</p>
+    <p><strong>Marca neutra y técnica en el dominio y en la capa de datos. Tono directo y sin eufemismos en el contenido.</strong> No es tibieza: vas a presentar alegaciones y a pedir expedientes a ayuntamientos, y vas a querer que un periodista o un abogado cite tus datos. Un dominio que se llama <em>observatorio</em> entra en esos sitios. Uno que se llama <em>en lucha</em> se queda en la puerta. El contenido sí puede, y debe, decir «esta ordenanza es discriminatoria, y aquí está el artículo que lo demuestra».</p>
+    <p>Solución práctica: un dominio principal institucional para la plataforma y los datos, y un segundo dominio militante que redirige, para usar en campañas y en los grupos de Facebook. Cuestan 12 € al año cada uno y te dan las dos voces sin partir el proyecto en dos.</p>
+    <div class="note warn">
+      <span class="tag">Decisión pendiente tuya</span>
+      Elige nombre esta semana. No lo dejes correr: condiciona dominio, correo, logo, cuentas de redes y el primer commit. Si no te convence ninguno, coge el menos malo. Un nombre mediocre publicado le gana a uno perfecto que no llega nunca.
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="num">03</div>
+  <div class="body">
+    <h2>Las tres capas, sin misticismo</h2>
+    <p class="lede">Mantengo tu separación, pero le quito la parte de «control no evidente». Un control declarado se defiende. Uno oculto, cuando se descubre — y se descubre — destruye lo único que no se puede copiar.</p>
+    <dl class="kv">
+      <dt>Capa 1 · Datos</dt><dd>Ordenanzas, señales, incidencias, resoluciones. Públicos y descargables. Volcado diario automático a un repositorio Git en CSV y JSON: eso te da auditabilidad, copia de seguridad y resistencia a que se caiga tu servidor, gratis y sin IPFS.</dd>
+      <dt>Capa 2 · Motor</dt><dd>Scrapers, analizador, API, aplicación. Código abierto. Que lo copie quien quiera.</dd>
+      <dt>Capa 3 · Coordinación</dt><dd>Qué se verifica, qué es estratégico, qué se convierte en campaña. La controlas tú. <strong>Y lo dices en una página pública titulada «Cómo se decide aquí»</strong>, con los criterios escritos.</dd>
+    </dl>
+    <p>Ese último punto es el cambio de fondo respecto a tu planteamiento. El foso defensivo no es la opacidad: es el histórico verificado, la relación con los validadores y el hecho de que llevas dos años registrando qué argumentos funcionaron. Un fork se lleva el código en diez minutos y no se lleva nada de eso. Ser transparente sobre quién decide no te quita ni un gramo de ese foso, y te ahorra la primera crisis de credibilidad.</p>
+  </div>
+</section>
+
+<section>
+  <div class="num">04</div>
+  <div class="body">
+    <h2>Stack</h2>
+    <p class="lede">Criterio único: qué puede mantener una persona sola sin que nada se rompa un domingo. Todo con región europea.</p>
+    <div class="scroll"><table>
+      <thead><tr><th>Pieza</th><th>Elección</th><th>Por qué</th><th>Coste/mes</th></tr></thead>
+      <tbody>
+        <tr><td>Web y API</td><td>Next.js en Vercel</td><td>Un único proyecto, despliegue por push, sin servidor que administrar.</td><td class="n">0 €</td></tr>
+        <tr><td>Base de datos</td><td>Supabase Postgres, Frankfurt</td><td>Postgres real con PostGIS para geolocalización, más autenticación y almacenamiento de ficheros en el mismo sitio. Datos en la UE.</td><td class="n">0 €</td></tr>
+        <tr><td>Autenticación</td><td>Enlace mágico por correo</td><td>Sin contraseñas que custodiar, sin filtraciones posibles. Un correo y ya está.</td><td class="n">0 €</td></tr>
+        <tr><td>Scraping y cron</td><td>GitHub Actions, scripts en Python</td><td>Cron gratis, registro de ejecución público, aviso automático si algo falla. Cero infraestructura.</td><td class="n">0 €</td></tr>
+        <tr><td>IA</td><td>Haiku 4.5 para triaje, Sonnet 5 para análisis</td><td>El triaje es alto volumen y barato. El análisis de una ordenanza de 90 páginas es raro y merece el modelo bueno.</td><td class="n">5–20 €</td></tr>
+        <tr><td>Correo</td><td>Resend</td><td>Enlaces de acceso y alertas. 3.000 correos gratis al mes.</td><td class="n">0 €</td></tr>
+        <tr><td>Analítica</td><td>Cloudflare Web Analytics</td><td>Sin cookies, por tanto <strong>sin banner de cookies</strong>. Menos fricción y una obligación legal menos.</td><td class="n">0 €</td></tr>
+        <tr><td>Mapa</td><td>MapLibre con teselas de OpenStreetMap</td><td>Solo para situar incidencias. Sin Google, sin claves de API, sin coste.</td><td class="n">0 €</td></tr>
+        <tr><td>Dominios</td><td>Dos, en registrador europeo</td><td>Institucional y militante.</td><td class="n">2 €</td></tr>
+      </tbody>
+    </table></div>
+    <p class="mono" style="color:var(--ink-3); font-size:13.5px">Total realista los primeros seis meses: entre 7 y 30 € al mes. El único gasto que puede dispararse es la IA, y la sección 06 explica cómo se contiene.</p>
+  </div>
+</section>
+
+<section>
+  <div class="num">05</div>
+  <div class="body">
+    <h2>Modelo de datos</h2>
+    <p class="lede">Diez tablas. La decisión importante está al final y hoy cuesta cero: registrar resultados desde el primer caso, aunque el motor de estrategia no exista hasta dentro de dos años.</p>
+    <div class="scroll"><table>
+      <thead><tr><th>Tabla</th><th>Contenido y campos que importan</th></tr></thead>
+      <tbody>
+        <tr><td>municipios</td><td>Los 8.131 municipios precargados con código INE, provincia, comunidad, población y coordenadas. Dataset público, se carga una vez y no se toca más. Es la columna vertebral de todo lo demás.</td></tr>
+        <tr><td>fuentes</td><td>Catálogo de boletines y sedes electrónicas: boletín provincial, tipo de acceso (RSS, JSON, PDF con URL predecible, HTML), estado del scraper, última ejecución correcta.</td></tr>
+        <tr><td>publicaciones</td><td>Cada anuncio bruto capturado: fecha, fuente, título, URL, texto extraído, hash. Nunca se borra — es tu prueba de que aquello se publicó.</td></tr>
+        <tr><td>normas</td><td>La ordenanza como objeto: municipio, tipo, fecha de aprobación, estado (información pública, vigente, derogada) y <code>plazo_alegaciones_hasta</code>.</td></tr>
+        <tr><td>hallazgos</td><td>Lo que la IA detecta dentro de una norma: artículo, cita literal, tipo de restricción (altura, longitud, MMA, pernocta, término municipal completo, gálibo físico) y por qué es problemático.</td></tr>
+        <tr><td>incidencias</td><td>Lo que reporta un usuario: municipio, coordenadas, tipo (señal, multa, desalojo, requerimiento), descripción, estado de moderación.</td></tr>
+        <tr><td>evidencias</td><td>Fotos y documentos. EXIF eliminado en la subida, hash SHA-256 guardado, coordenadas redondeadas a unos 100 metros en la versión pública.</td></tr>
+        <tr><td>casos</td><td>Agrupa norma, incidencias y hallazgos en una unidad accionable. Lleva <code>nivel_verificacion</code> y <code>potencial_estrategico</code>.</td></tr>
+        <tr><td>acciones</td><td>Lo que un usuario hace: tipo, fecha, plazo, estado. Se usa en la semana 6, pero la tabla se crea ya.</td></tr>
+        <tr><td>resultados</td><td><strong>La tabla que nadie crea a tiempo.</strong> Para cada caso cerrado: qué se hizo, qué argumentos se usaron, qué respondió la administración, cuánto tardó, y si se ganó o se perdió.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note">
+      <span class="tag">Por qué resultados hoy y no en 2028</span>
+      El motor de estrategia administrativa que quieres — «este argumento funciona en municipios de este perfil el 63 % de las veces» — no necesita programarse ahora. Necesita que los datos existan cuando llegue el momento. Si empiezas a registrar resultados el día que se te ocurra construirlo, habrás tirado dos años de casos. Cuesta una tabla y treinta segundos de formulario al cerrar cada expediente.
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="num">06</div>
+  <div class="body">
+    <h2>El radar, y cómo no arruinarte con él</h2>
+    <p class="lede">52 boletines provinciales, del orden de 400 anuncios al día. Pasarle todo eso a un modelo de lenguaje cuesta dinero y no hace ninguna falta.</p>
+    <div class="pipe">
+      <div class="stage"><b>1 · Recolectar</b><span>Sumario diario de cada boletín cableado. Un script por tipo de fuente, no por provincia.</span><span class="vol">~400 anuncios/día</span></div>
+      <div class="stage"><b>2 · Prefiltrar</b><span>Expresión regular sobre el texto. Coste cero, descarta el 98 %.</span><span class="vol">~8 candidatos/día</span></div>
+      <div class="stage"><b>3 · Triar</b><span>Haiku decide si afecta al caravaning y si es aprobación, información pública o derogación.</span><span class="vol">~3 relevantes/día</span></div>
+      <div class="stage"><b>4 · Analizar</b><span>Sonnet lee la ordenanza completa y extrae artículos, citas y conflictos.</span><span class="vol">~1/día</span></div>
+      <div class="stage"><b>5 · Publicar</b><span>Ficha del municipio actualizada y alerta por correo a quien siga esa provincia.</span><span class="vol">Automático</span></div>
+    </div>
+    <p><strong>El prefiltro es toda la economía del sistema.</strong> Una lista de términos — <span class="mono">autocaravana · caravana · vehículo vivienda · camper · acampada · pernocta · área de servicio · ordenanza de circulación · ordenanza de convivencia · estacionamiento · gálibo · limitador de altura</span> — más sus variantes en gallego, catalán, valenciano y euskera. Con eso el gasto en IA se queda en el entorno de 10 € al mes en lugar de varios cientos.</p>
+    <div class="note warn">
+      <span class="tag">Lo que no te voy a vender</span>
+      Los 52 boletines provinciales no se cablean en seis semanas trabajando solo. Cada uno tiene su formato y algunos son PDF escaneado sin capa de texto. El plan real: entre 15 y 20 en la semana 3 — los que publican RSS o URL predecible, que además son casi todos los de las provincias costeras donde está el conflicto — y dos o tres nuevos cada semana. La tabla <code>fuentes</code> enseña públicamente el estado de cobertura de cada provincia: es honesto y convierte cada hueco en una petición de ayuda concreta.
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="num">07</div>
+  <div class="body">
+    <h2>Capa de confianza</h2>
+    <p class="lede">Cinco niveles. Sin criptografía en la v1 — es sobreingeniería para un proyecto de una persona. Lo que sí hace falta desde el principio es un registro inmutable de quién validó qué y cuándo.</p>
+    <div class="ladder">
+      <div class="rung"><span class="lvl">1</span><b><span class="dot" style="background:var(--ink-3)"></span>Reportado</b><span class="who">Alguien lo dice. Visible y marcado como sin verificar. Lo crea cualquier usuario registrado.</span></div>
+      <div class="rung"><span class="lvl">2</span><b><span class="dot" style="background:var(--warn)"></span>Documentado</b><span class="who">Hay foto, coordenadas y fecha. Lo otorga el sistema automáticamente al cumplirse los tres requisitos.</span></div>
+      <div class="rung"><span class="lvl">3</span><b><span class="dot" style="background:var(--accent)"></span>Verificado</b><span class="who">Contrastado contra el documento oficial: boletín, ordenanza publicada o resolución. Lo otorgas tú o un validador de confianza.</span></div>
+      <div class="rung"><span class="lvl">4</span><b><span class="dot" style="background:var(--risk)"></span>Conflicto normativo</b><span class="who">Discrepancia acreditada entre señal, ordenanza y normativa superior. Exige citar los tres documentos.</span></div>
+      <div class="rung"><span class="lvl">5</span><b><span class="dot" style="background:var(--ok)"></span>Revisado jurídicamente</b><span class="who">Un abogado identificado ha valorado el recorrido. Solo tú concedes este nivel, y consta quién revisó.</span></div>
+    </div>
+    <p>El usuario ve el nivel y ve el registro completo de validaciones. Del nivel 3 en adelante es potestad tuya: eso es exactamente la capa de coordinación, dicha en voz alta, en la página de criterios.</p>
+  </div>
+</section>
+
+<section>
+  <div class="num">08</div>
+  <div class="body">
+    <h2>Dónde está exactamente la raya</h2>
+    <p class="lede">Dijiste acciones duras bajo responsabilidad de quien las ejecuta. De acuerdo, y los términos de uso lo recogerán. Pero hay una parte de la responsabilidad que los términos de uso no te quitan, y necesitas saber cuál es antes de publicar.</p>
+    <p>Como responsable de la plataforma tienes deber de retirada cuando se te notifica un contenido ilícito. Ningún clausulado traslada eso al usuario. Así que la línea la marcas tú, la escribes en la política de moderación y la aplicas en la cola de moderación previa que ya vas a tener montada.</p>
+    <div class="scroll"><table>
+      <thead><tr><th>Sí</th><th>No</th></tr></thead>
+      <tbody>
+        <tr><td>Señalar al ayuntamiento como institución</td><td>Datos personales de funcionarios o policía local</td></tr>
+        <tr><td>Citar a un cargo público por sus actos públicos, con fuente</td><td>Domicilios, teléfonos, fotos personales, familia</td></tr>
+        <tr><td>Ranking público de municipios más restrictivos</td><td>Llamamientos a acosar o presionar a personas concretas</td></tr>
+        <tr><td>Campañas de presión, concentraciones, prensa</td><td>Insultos, o imputar hechos delictivos sin resolución que los respalde</td></tr>
+        <tr><td>Fotos de señales, calles y vehículos propios</td><td>Matrículas y caras de terceros sin difuminar</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note risk">
+      <span class="tag">Los cuatro riesgos reales, por probabilidad</span>
+      <strong>Uno.</strong> Un ayuntamiento te requiere la retirada de una ficha: todo lo publicado en nivel 3 o superior cita el documento oficial, y contestas con la cita. <strong>Dos.</strong> Un usuario sube una foto con matrícula y alguien reclama: moderación previa, EXIF eliminado, retirada en 24 horas. <strong>Tres.</strong> Alguien te acusa de asesoramiento jurídico: descargo visible en cada plantilla, el sistema prepara y el usuario firma y presenta bajo su responsabilidad. <strong>Cuatro.</strong> Un cargo público reclama por honor: la tabla de arriba, aplicada sin excepciones aunque el caso te dé la razón moral.
+    </div>
+    <p>Protección de datos, versión mínima viable y suficiente: correo electrónico como único dato obligatorio, sin cookies de terceros, alojamiento en la UE, política de privacidad con tu identidad como responsable, y borrado de cuenta en un clic. Con eso cumples de sobra para el tamaño del proyecto.</p>
+  </div>
+</section>
+
+<section>
+  <div class="num">09</div>
+  <div class="body">
+    <h2>Runbook, semana a semana</h2>
+    <p class="lede">Seis semanas hasta el lanzamiento público con difusión. Cada semana termina con algo desplegado y visible.</p>
+
+    <div class="week">
+      <div class="whead"><span class="wtag">SEMANA 0 · 2 días</span><h3>Fundaciones</h3></div>
+      <p class="wgoal">Nada de código todavía. Solo lo que, si no decides ahora, te bloqueará en la semana 4.</p>
+      <ul>
+        <li>Elegir nombre y comprar los dos dominios.</li>
+        <li>Crear cuentas: GitHub, Vercel, Supabase con región Frankfurt, Resend, Cloudflare y consola de Anthropic.</li>
+        <li>Repositorio público con licencia AGPL-3.0 — permite forks pero obliga a que las mejoras vuelvan.</li>
+        <li>Redactar aviso legal, política de privacidad, términos de uso y política de moderación. Cuatro documentos, una tarde con IA y revisión tuya.</li>
+        <li>Escribir la página «Cómo se decide aquí»: quién valida, con qué criterios, y por qué no hay votaciones.</li>
+        <li>Reservar los nombres en X, Instagram y Telegram aunque todavía no publiques nada.</li>
+      </ul>
+      <div class="done"><b>Hecho cuando</b>Los dominios resuelven, el repositorio existe y los cuatro documentos legales están escritos.</div>
+    </div>
+
+    <div class="week">
+      <div class="whead"><span class="wtag">SEMANA 1</span><h3>La puerta abierta</h3></div>
+      <p class="wgoal">El sitio existe, cualquiera puede reportar desde cualquier municipio, y tú puedes moderar desde el móvil.</p>
+      <ul>
+        <li>Next.js desplegado en Vercel con el dominio apuntando.</li>
+        <li>Carga del dataset de los 8.131 municipios con código INE.</li>
+        <li>Tablas <code>incidencias</code> y <code>evidencias</code>. Acceso por enlace mágico.</li>
+        <li><strong>Formulario de reporte:</strong> municipio con autocompletado, tipo de incidencia, foto, coordenadas y descripción. Cuatro campos y una foto, ni uno más. Tiene que funcionar bien en móvil con mala cobertura.</li>
+        <li>Eliminación de EXIF y hash SHA-256 en la subida. Coordenadas públicas redondeadas.</li>
+        <li>Panel de moderación: cola con la foto grande y botones de aprobar, retocar o rechazar.</li>
+        <li>Portada que explica qué es esto en dos frases, con las páginas legales enlazadas.</li>
+      </ul>
+      <div class="done"><b>Hecho cuando</b>Reportas una incidencia real desde tu móvil, la apruebas desde el panel y aparece publicada.</div>
+    </div>
+
+    <div class="week">
+      <div class="whead"><span class="wtag">SEMANA 2</span><h3>Que haya algo que mirar</h3></div>
+      <p class="wgoal">Contenido de partida, cargado a mano por ti. Una base de datos vacía no convence a nadie de aportar.</p>
+      <ul>
+        <li>Ficha pública por municipio: qué se sabe, ordenanzas, incidencias, nivel de verificación.</li>
+        <li>Mapa nacional de incidencias con MapLibre. Solo incidencias: <strong>ni una sola área de pernocta recomendada</strong>.</li>
+        <li>Tablas <code>normas</code> y <code>casos</code> con la escalera de verificación.</li>
+        <li><strong>Cargar a mano 25 o 30 casos que ya conoces</strong>, de tus viajes y de los grupos. Es la tarea más aburrida del proyecto y la más importante: es tu corpus semilla.</li>
+        <li>Volcado diario automático de los datos públicos a CSV y JSON en el repositorio.</li>
+      </ul>
+      <div class="done"><b>Hecho cuando</b>Un desconocido entra, ve 30 casos documentados con foto y entiende en diez segundos qué puede aportar él.</div>
+    </div>
+
+    <div class="week">
+      <div class="whead"><span class="wtag">SEMANA 3</span><h3>Radar, primera pasada</h3></div>
+      <p class="wgoal">El sistema empieza a enterarse solo de lo que se publica.</p>
+      <ul>
+        <li>Tabla <code>fuentes</code> con los 52 boletines provinciales catalogados por tipo de acceso.</li>
+        <li>Scrapers para 15 o 20 fuentes, priorizando litoral e insular: Pontevedra, A Coruña, Cantabria, Asturias, Girona, Tarragona, Alicante, Málaga, Cádiz y Baleares.</li>
+        <li>Prefiltro por términos, con las variantes en las cuatro lenguas cooficiales.</li>
+        <li>Triaje con Haiku sobre lo que sobrevive al prefiltro.</li>
+        <li>Ejecución diaria en GitHub Actions, con aviso a tu correo si un scraper falla dos días seguidos.</li>
+        <li>Página pública de cobertura: qué provincias están automatizadas y cuáles no.</li>
+      </ul>
+      <div class="done"><b>Hecho cuando</b>El radar corre siete días seguidos sin que lo toques y detecta al menos un anuncio relevante real.</div>
+    </div>
+
+    <div class="week">
+      <div class="whead"><span class="wtag">SEMANA 4</span><h3>Analizador</h3></div>
+      <p class="wgoal">De «se ha publicado algo» a «el artículo 22 dice esto y choca con aquello».</p>
+      <ul>
+        <li>Descarga y extracción de texto de las ordenanzas, con OCR de reserva para los PDF escaneados.</li>
+        <li>Análisis con Sonnet: artículo, cita literal, tipo de restricción, motivo del problema y nivel de confianza.</li>
+        <li>Base normativa de referencia cargada como contexto: Reglamento General de Circulación, instrucción vigente de la DGT sobre estacionamiento y acampada, y la doctrina sobre competencias municipales.</li>
+        <li>Ficha pública de la norma con los hallazgos, <strong>siempre con la cita literal a la vista</strong> y marcada como análisis automático hasta que tú la verifiques.</li>
+        <li>Detección del plazo de alegaciones y cuenta atrás visible.</li>
+        <li>Alertas por correo: sigues una provincia, recibes aviso.</li>
+      </ul>
+      <div class="done"><b>Hecho cuando</b>Analizas tres ordenanzas reales y los hallazgos resisten tu propia lectura del documento.</div>
+    </div>
+
+    <div class="week">
+      <div class="whead"><span class="wtag">SEMANA 5</span><h3>Lanzamiento</h3></div>
+      <p class="wgoal">La semana que decide si esto existe. El producto ya está: ahora es todo distribución.</p>
+      <ul>
+        <li>Pulido: velocidad en móvil, textos, imagen de previsualización al compartir.</li>
+        <li>Un texto de presentación tuyo, con tu nombre y tu cara, explicando por qué lo has hecho. Sin corporativismo — aquí la credibilidad es personal.</li>
+        <li>Publicación en los grupos de Facebook de caravaning, uno a uno, con mensaje adaptado y sin spamear. Son tu canal principal: no lo quemes.</li>
+        <li>Foros, subreddits, canales de Telegram y X.</li>
+        <li>Contacto con ASEICAR y asociaciones territoriales: informar y ofrecer los datos. No pedir nada ni proponer fusión.</li>
+        <li>Correo a dos o tres periodistas que ya hayan escrito sobre restricciones a autocaravanas. Con datos concretos, no con una nota de prensa.</li>
+      </ul>
+      <div class="done"><b>Hecho cuando</b>Entran las primeras aportaciones de gente que no conoces de nada.</div>
+    </div>
+
+    <div class="week">
+      <div class="whead"><span class="wtag">SEMANA 6</span><h3>Fase B, primer ladrillo</h3></div>
+      <p class="wgoal">De documentar a actuar. Solo tres plantillas: las que cubren el 80 % de los casos.</p>
+      <ul>
+        <li><strong>Alegación</strong> a ordenanza en información pública.</li>
+        <li><strong>Solicitud de acceso a información pública</strong> sobre una señal concreta: acuerdo que la aprueba y expediente.</li>
+        <li><strong>Escrito de disconformidad</strong> por señalización no homologada o contraria a la ordenanza vigente.</li>
+        <li>Generación parametrizada a partir del hallazgo: el sistema rellena municipio, artículos y argumentos, y entrega un PDF.</li>
+        <li>Descargo en cada documento: <em>no constituye asesoramiento jurídico; el usuario presenta bajo su responsabilidad</em>.</li>
+        <li>«Mis acciones»: registro de lo presentado con fecha, plazo y estado, y recordatorio por correo al vencer.</li>
+        <li>Formulario de cierre de caso que alimenta la tabla <code>resultados</code>.</li>
+      </ul>
+      <div class="done"><b>Hecho cuando</b>Un usuario genera, presenta y registra una alegación de principio a fin.</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="num">10</div>
+  <div class="body">
+    <h2>Operación diaria: 20 minutos</h2>
+    <p class="lede">Si un día la rutina no cabe en 20 minutos, es que hay que automatizar algo — no que hay que trabajar más. Este es el criterio que mantiene el proyecto vivo sin contratar a nadie.</p>
+    <ul>
+      <li><strong>Cola de moderación</strong>, 5 minutos. Aprobar, difuminar o rechazar. Desde el móvil, en cualquier sitio.</li>
+      <li><strong>Bandeja del radar</strong>, 10 minutos. Revisar lo que ha triado la IA, ascender a verificado lo que hayas contrastado, descartar el ruido.</li>
+      <li><strong>Respuestas</strong>, 5 minutos. Correos y comentarios.</li>
+      <li><strong>Semanal, 30 minutos.</strong> Cablear un boletín provincial nuevo y publicar un resumen de la semana. Ese resumen es tu contenido recurrente y no cuesta nada: sale de los datos.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="num">11</div>
+  <div class="body">
+    <h2>Lo que no se construye todavía</h2>
+    <p class="lede">Todo esto está en tu planteamiento y todo esto es buena idea. Ninguna cabe en los primeros seis meses trabajando solo, y meter cualquiera de ellas es exactamente cómo se muere el proyecto.</p>
+    <div class="scroll"><table>
+      <thead><tr><th>Descartado en la v1</th><th>Cuándo se recupera</th></tr></thead>
+      <tbody>
+        <tr><td>IPFS y almacenamiento distribuido</td><td>El volcado diario a Git te da resistencia y auditoría hoy. IPFS solo cuando alguien intente tirarte, no antes.</td></tr>
+        <tr><td>Firmas criptográficas de validación</td><td>Con un solo validador no aporta nada. Cuando haya cinco o más.</td></tr>
+        <tr><td>Motor de estrategia administrativa</td><td>Necesita más de 100 casos cerrados, o sea unos dos años. Mientras tanto, se registran resultados.</td></tr>
+        <tr><td>Financiación de litigios</td><td>Requiere estructura jurídica, cuentas y transparencia formal. Solo con asociación constituida.</td></tr>
+        <tr><td>Aplicación móvil nativa</td><td>Probablemente nunca. Una web bien hecha en móvil cubre esto de sobra.</td></tr>
+        <tr><td>Mapa de áreas y sitios donde dormir</td><td>Nunca. Es la trampa que convierte esto en el enésimo clon de Park4Night y diluye todo el foco.</td></tr>
+        <tr><td>Federación, Matrix, ActivityPub</td><td>Cuando haya una comunidad que federar. Hoy no hay comunidad.</td></tr>
+        <tr><td>Asociación o fundación</td><td>Cuando llegue el primer litigio serio o el primer dinero de terceros. Ni un día antes.</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+
+<section>
+  <div class="num">12</div>
+  <div class="body">
+    <h2>Punto de decisión</h2>
+    <p class="lede">Tu métrica son 50 aportaciones. Ponle plazo ahora, mientras todavía eres objetivo, porque dentro de tres meses estarás enamorado del proyecto y no podrás juzgarlo.</p>
+    <dl class="kv">
+      <dt>Plazo</dt><dd>90 días desde el lanzamiento de la semana 5.</dd>
+      <dt>Umbral</dt><dd>50 aportaciones de personas distintas de ti: incidencias, fotos, correcciones o avisos de ordenanza.</dd>
+      <dt>Si se supera</dt><dd>El problema es real y la gente responde. Toca reforzar la fase B, buscar un abogado colaborador y plantear estructura jurídica.</dd>
+      <dt>Si se queda corto</dt><dd>Entre 20 y 50: el producto funciona pero la distribución no. Tres meses más centrados solo en llegar a la gente, sin tocar código.</dd>
+      <dt>Si no llega a 20</dt><dd>La hipótesis falla: hay cabreo pero no disposición a actuar. Se congela, se deja el sitio en pie como archivo público, y no se le echan más horas. Es un resultado, no un fracaso.</dd>
+    </dl>
+    <div class="note">
+      <span class="tag">La medida honesta</span>
+      50 aportaciones es un listón bajo a propósito, y está bien que lo sea. Lo difícil no es esa cifra: es que la primera alegación generada por la plataforma se presente de verdad en el registro de un ayuntamiento. Ese es el momento en que esto deja de ser una web y pasa a ser una herramienta.
+    </div>
+  </div>
+</section>
+
+<footer>Runbook v1 · 3 septiembre 2026 · Revisar al cierre de la semana 5</footer>
+
+</div>

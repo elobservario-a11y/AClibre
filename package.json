@@ -1,0 +1,17 @@
+{
+  "name": "ac-defensa-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Plataforma abierta de defensa del caravaning en España",
+  "license": "AGPL-3.0-only",
+  "scripts": {
+    "db:init": "supabase init",
+    "db:start": "supabase start",
+    "db:stop": "supabase stop",
+    "db:reset": "supabase db reset",
+    "db:status": "supabase status"
+  },
+  "devDependencies": {
+    "supabase": "^2.116.0"
+  }
+}
