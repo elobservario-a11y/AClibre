@@ -54,12 +54,15 @@ def generar_pdf_alegacion(
 
     n_id, prot_id, tipo_norma, estado_norma, plazo_hasta, url_pub, ine, muni, prov, ca = norma_row
 
-    # 2. Obtener hallazgos de la norma
+    # 2. Obtener hallazgos de la norma ordenados dinámicamente por peso y tasa de éxito
     cursor.execute("""
-        select articulo, cita_literal, tipo_restriccion, fundamento_ilegalidad
-        from public.hallazgos
-        where norma_id = %s
-        order by id asc;
+        select h.articulo, h.cita_literal, h.tipo_restriccion, h.fundamento_ilegalidad,
+               coalesce(e.tasa_exito, 75.0) as tasa_exito,
+               coalesce(e.peso_prioridad, 50) as peso
+        from public.hallazgos h
+        left join public.efectividad_argumentos e on e.tipo_restriccion = h.tipo_restriccion
+        where h.norma_id = %s
+        order by coalesce(e.peso_prioridad, 50) desc, coalesce(e.tasa_exito, 75.0) desc, h.id asc;
     """, (n_id,))
     hallazgos = cursor.fetchall()
 
@@ -206,8 +209,9 @@ def generar_pdf_alegacion(
 
     if hallazgos:
         for idx, h in enumerate(hallazgos, 1):
-            art, cita, tipo_rest, fund = h
-            story.append(Paragraph(f"<b>2.{idx}. Respecto al precepto: {art}</b>", style_bold))
+            art, cita, tipo_rest, fund, tasa, peso = h
+            badge_efectividad = f" <font size='8' color='#16a34a'>[Efectividad jurídica contrastada: {tasa}% de resoluciones favorables]</font>" if tasa >= 80 else ""
+            story.append(Paragraph(f"<b>2.{idx}. Respecto al precepto: {art}</b>{badge_efectividad}", style_bold))
             story.append(Paragraph(f"«{cita}»", style_cita))
             story.append(Paragraph(f"<b>Fundamento de ilegalidad:</b> {fund}", style_body))
     else:

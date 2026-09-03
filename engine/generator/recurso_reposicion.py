@@ -54,11 +54,15 @@ def generar_pdf_recurso_reposicion(
 
     n_id, prot_id, tipo_norma, estado_norma, url_pub, ine, muni, prov = row
 
+    # 2. Obtener hallazgos ordenados dinámicamente por prioridad y tasa de éxito
     cursor.execute("""
-        select articulo, cita_literal, fundamento_ilegalidad
-        from public.hallazgos
-        where norma_id = %s
-        order by id asc;
+        select h.articulo, h.cita_literal, h.fundamento_ilegalidad,
+               coalesce(e.tasa_exito, 75.0) as tasa_exito,
+               coalesce(e.peso_prioridad, 50) as peso
+        from public.hallazgos h
+        left join public.efectividad_argumentos e on e.tipo_restriccion = h.tipo_restriccion
+        where h.norma_id = %s
+        order by coalesce(e.peso_prioridad, 50) desc, coalesce(e.tasa_exito, 75.0) desc, h.id asc;
     """, (n_id,))
     hallazgos = cursor.fetchall()
 
@@ -164,8 +168,9 @@ def generar_pdf_recurso_reposicion(
 
     if hallazgos:
         for idx, h in enumerate(hallazgos, 1):
-            art, cita, fund = h[0], h[1], h[2]
-            story.append(Paragraph(f"<b>2.{idx}. Precepto impugnado: {art}</b>", style_bold))
+            art, cita, fund, tasa, peso = h
+            badge_efectividad = f" <font size='8' color='#dc2626'>[Solidez jurídica: {tasa}% de éxito probado]</font>" if tasa >= 80 else ""
+            story.append(Paragraph(f"<b>2.{idx}. Precepto impugnado: {art}</b>{badge_efectividad}", style_bold))
             story.append(Paragraph(f"«{cita}»", style_cita))
             story.append(Paragraph(f"<b>Fundamento de nulidad:</b> {fund}", style_body))
     else:
