@@ -183,9 +183,17 @@ export default function AdminModeracionPage() {
         <span className="font-bold text-orange-600">
           Pendientes: {items.length}
         </span>
-        <span className="text-gray-400">
-          ID: {currentItem.protocol_id}
-        </span>
+        <div className="flex items-center gap-3">
+          <a
+            href="/admin/triaje"
+            className="rounded-lg bg-blue-50 px-2.5 py-1 font-bold text-blue-700 hover:bg-blue-100"
+          >
+            🤖 Bandeja Triaje
+          </a>
+          <span className="text-gray-400">
+            ID: {currentItem.protocol_id}
+          </span>
+        </div>
       </div>
 
       {/* Tarjeta de moderación */}
