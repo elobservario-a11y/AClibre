@@ -44,8 +44,18 @@ export async function POST(request: Request) {
     const safeDomicilio = String(domicilio || '[DOMICILIO]').slice(0, 200)
     const safeEmail = String(email || 'info@slowvan.com').slice(0, 100)
 
-    const generatorUrl = process.env.PDF_GENERATOR_URL
+    // Acepta ambos nombres: el entorno de despliegue puede tener configurado cualquiera de los dos
+    const generatorUrl = process.env.PDF_GENERATOR_URL || process.env.GENERATOR_SERVICE_URL
     const internalToken = process.env.INTERNAL_GENERATOR_TOKEN
+
+    // En producción el fallback local a Python no existe: fallar con un mensaje claro
+    if (!generatorUrl && process.env.NODE_ENV === 'production') {
+      console.error('Falta PDF_GENERATOR_URL / GENERATOR_SERVICE_URL en el entorno de producción')
+      return NextResponse.json(
+        { error: 'El servicio de generación de documentos no está configurado. Inténtalo de nuevo más tarde.' },
+        { status: 503 }
+      )
+    }
 
     // Modo 1: Si está configurado el microservicio Python independiente (producción Vercel -> Railway/Render)
     if (generatorUrl) {
