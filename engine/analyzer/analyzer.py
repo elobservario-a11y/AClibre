@@ -166,13 +166,17 @@ def analizar_ordenanza(titulo: str, texto: str, fecha_publicacion: Optional[date
 
 def ejecutar_analisis_pendientes():
     """Analiza normas en estado informacion_publica que no tengan hallazgos asociados."""
-    conn = psycopg2.connect(
-        dbname=os.environ.get("POSTGRES_DB", "postgres"),
-        user=os.environ.get("POSTGRES_USER", "postgres"),
-        password=os.environ.get("POSTGRES_PASSWORD", "postgres"),
-        host=os.environ.get("POSTGRES_HOST", "127.0.0.1"),
-        port=int(os.environ.get("POSTGRES_PORT", 54332))
-    )
+    db_url = os.environ.get("DATABASE_URL") or os.environ.get("SUPABASE_DB_URL")
+    if db_url:
+        conn = psycopg2.connect(db_url)
+    else:
+        conn = psycopg2.connect(
+            dbname=os.environ.get("POSTGRES_DB", "postgres"),
+            user=os.environ.get("POSTGRES_USER", "postgres"),
+            password=os.environ.get("POSTGRES_PASSWORD", "postgres"),
+            host=os.environ.get("POSTGRES_HOST", "127.0.0.1"),
+            port=int(os.environ.get("POSTGRES_PORT", 54332))
+        )
     cursor = conn.cursor()
 
     cursor.execute("""

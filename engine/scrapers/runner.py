@@ -26,13 +26,17 @@ ADAPTER_MAP: Dict[str, Type[BaseAdapter]] = {
 def run_radar(fecha: date = None):
     fecha_obj = fecha or date.today()
 
-    conn = psycopg2.connect(
-        dbname=os.environ.get("POSTGRES_DB", "postgres"),
-        user=os.environ.get("POSTGRES_USER", "postgres"),
-        password=os.environ.get("POSTGRES_PASSWORD", "postgres"),
-        host=os.environ.get("POSTGRES_HOST", "127.0.0.1"),
-        port=int(os.environ.get("POSTGRES_PORT", 54332))
-    )
+    db_url = os.environ.get("DATABASE_URL") or os.environ.get("SUPABASE_DB_URL")
+    if db_url:
+        conn = psycopg2.connect(db_url)
+    else:
+        conn = psycopg2.connect(
+            dbname=os.environ.get("POSTGRES_DB", "postgres"),
+            user=os.environ.get("POSTGRES_USER", "postgres"),
+            password=os.environ.get("POSTGRES_PASSWORD", "postgres"),
+            host=os.environ.get("POSTGRES_HOST", "127.0.0.1"),
+            port=int(os.environ.get("POSTGRES_PORT", 54332))
+        )
     cursor = conn.cursor()
 
     # 1. Obtener fuentes activadas

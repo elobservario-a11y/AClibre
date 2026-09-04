@@ -44,7 +44,56 @@ export async function POST(request: Request) {
     const safeDomicilio = String(domicilio || '[DOMICILIO]').slice(0, 200)
     const safeEmail = String(email || 'info@slowvan.com').slice(0, 100)
 
-    // Invocación segura sin shell mediante execFile y vector de argumentos
+    const generatorUrl = process.env.PDF_GENERATOR_URL
+    const internalToken = process.env.INTERNAL_GENERATOR_TOKEN
+
+    // Modo 1: Si está configurado el microservicio Python independiente (producción Vercel -> Railway/Render)
+    if (generatorUrl) {
+      try {
+        const remoteRes = await fetch(`${generatorUrl.replace(/\/$/, '')}/generar/${tipoDocumento}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            ...(internalToken ? { 'X-Internal-Token': internalToken } : {}),
+          },
+          body: JSON.stringify({
+            protocolId,
+            nombre: safeNombre,
+            dni: safeDni,
+            domicilio: safeDomicilio,
+            email: safeEmail,
+          }),
+        })
+
+        if (!remoteRes.ok) {
+          const errData = await remoteRes.json().catch(() => ({}))
+          return NextResponse.json(
+            { error: errData.detail || 'El servicio generador de documentos no pudo completar la solicitud' },
+            { status: remoteRes.status === 404 ? 404 : 502 }
+          )
+        }
+
+        const pdfBuffer = await remoteRes.arrayBuffer()
+        const prefix = PREFIX_MAP[tipoDocumento] || 'Documento'
+
+        return new Response(pdfBuffer, {
+          status: 200,
+          headers: {
+            'Content-Type': 'application/pdf',
+            'Content-Disposition': `attachment; filename="${prefix}_${protocolId}.pdf"`,
+            'Cache-Control': 'no-store, no-cache, must-revalidate',
+          },
+        })
+      } catch (fetchErr) {
+        console.error('Error conectando con el microservicio generador:', fetchErr)
+        return NextResponse.json(
+          { error: 'El servicio de generación de documentos no está disponible en este momento. Inténtalo de nuevo en unos minutos.' },
+          { status: 503 }
+        )
+      }
+    }
+
+    // Modo 2: Fallback local para desarrollo con Python local
     await execFileAsync('python', [
       scriptPath,
       '--protocol', protocolId,
