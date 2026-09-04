@@ -39,12 +39,19 @@ export async function POST(request: Request) {
     }
 
     // 4. Alta o reactivación
-    const { data: existente } = await supabase
+    // Ojo: `.eq('municipio_id', null)` NO casa con un NULL de SQL, así que las
+    // suscripciones provinciales (sin municipio) nunca se deduplicaban y se
+    // insertaba una fila por cada envío, multiplicando los correos de alerta.
+    let consulta = supabase
       .from('suscripciones_alertas')
       .select('id, activa')
       .eq('email', emailNormalizado)
-      .eq('municipio_id', municipioId || null)
-      .maybeSingle()
+
+    consulta = municipioId
+      ? consulta.eq('municipio_id', municipioId)
+      : consulta.is('municipio_id', null)
+
+    const { data: existente } = await consulta.maybeSingle()
 
     if (existente) {
       if (!existente.activa) {
