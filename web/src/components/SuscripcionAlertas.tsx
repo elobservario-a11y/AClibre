@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { Turnstile } from '@marsidev/react-turnstile'
 
 export default function SuscripcionAlertas({
   municipioId,
@@ -15,9 +16,16 @@ export default function SuscripcionAlertas({
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState('')
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+
+    if (!turnstileToken) {
+      setError('Completa la verificación de seguridad.')
+      return
+    }
+
     setLoading(true)
     setError('')
 
@@ -25,7 +33,7 @@ export default function SuscripcionAlertas({
       const res = await fetch('/api/alertas/suscribir', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, municipioId, provincia }),
+        body: JSON.stringify({ email, municipioId, provincia, turnstileToken }),
       })
 
       if (res.ok) {
@@ -33,9 +41,12 @@ export default function SuscripcionAlertas({
       } else {
         const d = await res.json()
         setError(d.error || 'No se pudo activar la alerta')
+        // Los tokens de Turnstile son de un solo uso: hay que pedir uno nuevo.
+        setTurnstileToken(null)
       }
     } catch {
       setError('Error de conexión')
+      setTurnstileToken(null)
     } finally {
       setLoading(false)
     }
@@ -73,12 +84,23 @@ export default function SuscripcionAlertas({
         />
         <button
           type="submit"
-          disabled={loading}
+          disabled={loading || !turnstileToken}
           className="shrink-0 rounded-xl bg-orange-600 px-4 py-2 text-xs font-bold text-white shadow transition hover:bg-orange-500 disabled:opacity-50"
         >
           {loading ? 'Guardando…' : 'Activar alerta'}
         </button>
       </div>
+
+      <div className="mt-3 flex justify-center">
+        <Turnstile
+          siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
+          onSuccess={(token) => setTurnstileToken(token)}
+          onExpire={() => setTurnstileToken(null)}
+          onError={() => setTurnstileToken(null)}
+          options={{ theme: 'light', language: 'es', size: 'compact' }}
+        />
+      </div>
+
       {error && <p className="mt-2 text-xs text-red-600">{error}</p>}
     </form>
   )

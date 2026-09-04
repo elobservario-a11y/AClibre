@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { obfuscateCoords } from '@/lib/geo'
+import { verificarTurnstile } from '@/lib/turnstile'
 
 const TIPOS_VALIDOS = ['senal_ilegal', 'multa', 'desalojo', 'bloqueo_acceso']
 
@@ -23,27 +24,12 @@ export async function POST(request: Request) {
       lon,
     } = body
 
-    // 1. Verificación obligatoria de Turnstile en servidor
-    const turnstileSecret = process.env.TURNSTILE_SECRET_KEY
-    if (!turnstileToken) {
-      return NextResponse.json({ error: 'Falta token de verificación Turnstile' }, { status: 400 })
-    }
-
-    if (turnstileSecret) {
-      const formData = new URLSearchParams()
-      formData.append('secret', turnstileSecret)
-      formData.append('response', turnstileToken)
-
-      const verifyRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: formData.toString(),
-      })
-      const verifyData = await verifyRes.json()
-
-      if (!verifyData.success) {
-        return NextResponse.json({ error: 'Verificación antibot Turnstile fallida' }, { status: 403 })
-      }
+    // 1. Verificación obligatoria de Turnstile en servidor.
+    //    Falla cerrado: si falta el secreto o es una clave de prueba, se rechaza
+    //    en producción en lugar de dejar pasar la petición sin comprobar nada.
+    const verificacion = await verificarTurnstile(turnstileToken)
+    if (!verificacion.ok) {
+      return NextResponse.json({ error: verificacion.motivo }, { status: verificacion.status })
     }
 
     // 2. Validaciones de datos
