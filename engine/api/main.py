@@ -27,7 +27,11 @@ class GenerarDocumentoPayload(BaseModel):
     domicilio: Optional[str] = "[DOMICILIO]"
     email: Optional[str] = "info@slowvan.com"
 
-@app.get("/health")
+@app.api_route("/", methods=["GET", "HEAD"])
+def root():
+    return {"status": "ok", "service": "slowvan-pdf-generator"}
+
+@app.api_route("/health", methods=["GET", "HEAD"])
 def health():
     return {"status": "ok", "service": "slowvan-pdf-generator"}
 
