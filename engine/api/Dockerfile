@@ -7,10 +7,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libpq-dev \
     && rm -rf /var/lib/apt/lists/*
 
-COPY engine/api/requirements.txt /app/requirements.txt
-RUN pip install --no-cache-dir -r /app/requirements.txt
+# Copiar el código fuente de engine
+# Funciona tanto si el contexto de build es la raíz (.) como si es engine/
+COPY . /app/source/
 
-COPY engine/ /app/engine/
+# Organizar la estructura en /app/engine
+RUN python -c "import os, shutil; src = '/app/source'; dest = '/app/engine'; os.makedirs(dest, exist_ok=True); (shutil.copytree('/app/source/engine', dest, dirs_exist_ok=True) if os.path.exists('/app/source/engine') else shutil.copytree('/app/source', dest, dirs_exist_ok=True))" && \
+    pip install --no-cache-dir -r /app/engine/api/requirements.txt && \
+    rm -rf /app/source
 
 ENV PYTHONPATH=/app/engine
 WORKDIR /app/engine/api
